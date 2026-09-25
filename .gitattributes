@@ -1,0 +1,7 @@
+# Seragamkan akhir baris antar anggota tim (Windows/Mac/Linux).
+* text=auto
+
+# Data mentah disimpan persis byte-per-byte, tidak pernah dikonversi.
+data/mentah/** -text
+
+*.png binary

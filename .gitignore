@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data olahan: dibangun ulang tanpa internet dengan
+#   python src/ambil_data_snpmb.py
+# Data mentah (data/mentah/) SENGAJA di-commit agar seluruh tim bekerja dari
+# sumber yang sama. Lihat docs/STANDAR_PENGERJAAN.md.
+data/olahan/
+
+# Editor & sistem operasi
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Pengaturan lokal Claude Code
+.claude/settings.local.json
