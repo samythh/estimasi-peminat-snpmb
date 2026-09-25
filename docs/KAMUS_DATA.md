@@ -46,10 +46,10 @@ Prodi tanpa riwayat (`is_new == 1`) mendapat satu baris dengan `tahun` dan metri
 | `portofolio` | teks | Jenis portofolio yang disyaratkan (`Tidak Ada` bila tidak ada) | Fitur |
 | `kelompok_bidang` | teks | Pengelompokan bidang buatan tim, diadaptasi dari ISCED-F 2013. 10 nilai: kesehatan, teknik, sains, pertanian, ekonomi, sosial_humaniora, pendidikan, seni, pariwisata, olahraga | Fitur |
 | `is_fakultas` | 0/1 | 1 bila entri adalah fakultas/sekolah ITB, bukan prodi (21 entri) | Penyaring: dikeluarkan dari pemodelan |
-| `is_new` | 0/1 | 1 bila prodi baru tanpa riwayat | Tinjau: selalu 0 pada baris bertarget |
-| `daya_tampung_kini` | int | Daya tampung **tahun pendaftaran berjalan (2026)**. Sama untuk semua tahun dalam satu prodi-jalur | Tinjau: berisi nilai 2026 di baris 2021–2025 |
+| `is_new` | 0/1 | 1 bila prodi baru tanpa riwayat | Penyaring; tidak menjadi fitur karena selalu 0 pada baris bertarget |
+| `daya_tampung_kini` | int | Daya tampung **tahun pendaftaran berjalan (2026)**. Sama untuk semua tahun dalam satu prodi-jalur | **Dilarang** untuk baris historis: berisi nilai masa depan |
 | `tahun` | int | Tahun seleksi (2021–2025) | Identitas, dan dasar pembagian latih/uji |
-| `daya_tampung` | int | Daya tampung **tahun baris itu**, diumumkan sebelum pendaftaran | Tinjau: kandidat pengganti `daya_tampung_kini` |
+| `daya_tampung` | int | Daya tampung **tahun baris itu**, diasumsikan diumumkan sebelum pendaftaran | Fitur |
 | `peminat` | int | Jumlah pendaftar prodi pada jalur dan tahun itu | **Target** |
 | `terima` | int | Jumlah diterima. **Kosong 100% di SNBT** | **Dilarang**: baru diketahui setelah seleksi |
 | `peminat_lag1` | int | `peminat` tahun−1, prodi & jalur yang sama | Fitur |
@@ -61,7 +61,18 @@ Prodi tanpa riwayat (`is_new == 1`) mendapat satu baris dengan `tahun` dan metri
 | `proporsi_peminat_lokal` | float | Porsi peminat dari provinsi kedudukan PTN. Hanya SNBT | **Dilarang**: hasil pendaftaran tahun berjalan, dan tidak ada di SNBP |
 | `jumlah_provinsi_asal` | int | Jumlah provinsi asal peminat. Hanya SNBT | **Dilarang**: alasan sama |
 
-Kolom PTN yang direncanakan untuk fitur struktural di `fondasi.py` (belum ada di panel, diambil dari daftar PTN mentah): `is_ptnbh`, `is_akademik`, `is_vokasi`, `is_ptkin`, `provinsi`.
+### Fitur turunan di `fondasi.py`
+
+Fitur berikut tidak ditulis kembali ke panel. Semuanya dibentuk saat `muat_data()` dipanggil:
+
+| Fitur | Sumber dan arti |
+|---|---|
+| `is_ptnbh`, `is_akademik`, `is_vokasi`, `is_ptkin` | Atribut PTN dari daftar PTN mentah |
+| `provinsi` | Provinsi kedudukan PTN dari daftar PTN mentah |
+| `is_pendidikan` | 1 untuk 12 PTN kependidikan (eks-IKIP), diturunkan dari nama PTN |
+| `is_psdku` | 1 bila nama prodi memuat `PSDKU`, `KAMPUS`, atau pola `K. KAB`/`K, KAB` |
+
+Pola `is_psdku` mencakup 182 prodi non-fakultas dalam katalog: 170 memiliki target historis dan 12 merupakan prodi baru tanpa target.
 
 ---
 

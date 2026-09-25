@@ -6,6 +6,55 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [0.7.0] — 2026-09-25
+
+Panduan kerja terpisah untuk setiap anggota kelompok.
+
+### Ditambahkan
+- `docs/PANDUAN_ANGGOTA.md` sebagai indeks, urutan baca wajib, aturan penggunaan, dan format laporan progres.
+- `docs/panduan/mikail.md`: fondasi, baseline, perbandingan model, dan integrasi.
+- `docs/panduan/ihsan.md`: BAB I–II, verifikasi pustaka, Linear Regression, dan BAB V.
+- `docs/panduan/shiddiq.md`: revisi PPT, Random Forest, feature importance, rentang prediksi, dan BAB IV.
+- `docs/panduan/duha.md`: eksplorasi Streamlit, XGBoost, dan BAB III.
+
+### Diubah
+- README, panduan Claude, standar pengerjaan, dan pembagian tugas kini menautkan indeks tutorial anggota.
+
+---
+## [0.6.1] — 2026-09-25
+
+Penyelarasan pembagian tugas dan tata kelola dokumentasi kelompok.
+
+### Ditambahkan
+- `docs/PEMBAGIAN_TUGAS.md` sebagai sumber kebenaran untuk penanggung jawab, status, keluaran wajib, dependensi, tenggat, bukti, dan aturan serah terima.
+- Peta sumber dokumentasi dan catatan minimum yang harus menyertai setiap penyerahan pekerjaan.
+
+### Diubah
+- `README.md` kini menautkan pembagian tugas dan menjelaskan kewajiban memperbarui dokumentasi.
+- `CLAUDE.md` kini mewajibkan pemeriksaan pembagian tugas, membatasi pengerjaan pada bagian yang diminta, dan merutekan setiap jenis perubahan ke dokumen yang sesuai.
+- `STANDAR_PENGERJAAN.md` kini mensyaratkan artefak yang dapat diverifikasi, pelacakan berkas di luar repositori, serta pembaruan status dan bukti pekerjaan.
+
+---
+## [0.6.0] — 2026-09-25
+
+Fondasi pemodelan bersama dan baseline.
+
+### Ditambahkan
+- `src/fondasi.py`: pemuatan fitur bersama, pembagian temporal 2021–2024/2025, validasi kebocoran, `lipatan_waktu()`, transformasi target log, dan evaluasi MAE/MAPE/R²/RMSLE.
+- `notebooks/00_baseline.ipynb` dan `notebooks/template_model.ipynb`.
+- `hasil/evaluasi.csv` berisi hasil baseline rata-rata kelompok bidang dan baseline lag-1.
+- Informasi bahwa proyek merupakan Tugas Besar mata kuliah Machine Learning dengan anggota Mikail, Shiddiq, Duha, dan Ihsan.
+
+### Diubah
+- T-01–T-05 diputuskan menjadi K-13–K-17; K-18 menambahkan validasi silang berbasis waktu.
+- Setiap model wajib diuji pada target asli dan log; RMSLE ditambahkan sebagai metrik pelengkap.
+- Kamus data dan standar pengerjaan diselaraskan dengan fondasi yang sudah tersedia.
+
+### Diperbaiki
+- Mode `--tinjau-psdku` kini memeriksa seluruh katalog non-fakultas, termasuk prodi baru, sehingga melaporkan 182 prodi sesuai K-16 (170 bertarget dan 12 prodi baru).
+
+---
+
 ## [0.5.0] — 2026-09-21
 
 Reorganisasi proyek dan finalisasi fitur `kelompok_bidang`.

@@ -2,6 +2,8 @@
 
 Aturan kerja bersama untuk seluruh anggota tim. Tujuannya satu: **hasil ketiga model harus bisa dibandingkan secara adil dan dipertanggungjawabkan di depan penguji.** Kalau satu anggota melanggar aturan data, hasil semua model ikut tidak bisa dibandingkan.
 
+Setelah membaca standar ini, setiap anggota wajib mengikuti tutorial pribadinya melalui [PANDUAN_ANGGOTA.md](PANDUAN_ANGGOTA.md).
+
 Kalau ada aturan yang menurutmu keliru, jangan dilanggar diam-diam. Bahas dulu dengan tim, lalu catat perubahannya di [KEPUTUSAN_METODOLOGI.md](KEPUTUSAN_METODOLOGI.md).
 
 ---
@@ -48,9 +50,23 @@ tinjau  →  diskusikan/konfirmasi  →  simpan  →  catat
 - **Tinjau dulu.** Skrip yang mengubah data tetap (pemetaan, penyimpanan CSV) punya mode tinjau yang hanya mencetak hasil. Periksa distribusi dan contoh acaknya sebelum menyimpan.
 - **Satu sumber kebenaran.** Setiap logika hanya ditulis di satu tempat. Contoh: pemetaan bidang hanya ada di `src/fitur_kelompok_bidang.py` dan dipanggil dari tempat lain, bukan disalin.
 - **Setiap perubahan dicatat:**
-  - perubahan data, kolom, kode, atau jalur berkas → [CHANGELOG.md](CHANGELOG.md)
+  - seluruh perubahan penting pada data, kode, model, hasil, laporan, presentasi, tugas, atau jalur berkas → [CHANGELOG.md](CHANGELOG.md)
   - keputusan metodologis beserta alasannya → [KEPUTUSAN_METODOLOGI.md](KEPUTUSAN_METODOLOGI.md)
-  - kolom baru atau perubahan arti kolom → [KAMUS_DATA.md](KAMUS_DATA.md)
+  - kolom baru atau perubahan arti/status fitur → [KAMUS_DATA.md](KAMUS_DATA.md)
+  - perubahan pemilik, status, tenggat, dependensi, keluaran, atau lokasi artefak → [PEMBAGIAN_TUGAS.md](PEMBAGIAN_TUGAS.md)
+- **Artefak di luar repositori tetap dilacak.** PPT, laporan, atau berkas di folder bersama harus memiliki tautan/lokasi dan status yang dicatat di `PEMBAGIAN_TUGAS.md`.
+- **Selesai berarti dapat diverifikasi.** Status selesai membutuhkan artefak, cara membuka/menjalankan, serta hasil pemeriksaan. Kabar lisan saja belum cukup.
+
+### Catatan minimum saat menyerahkan pekerjaan
+
+Setiap penyerahan harus menjelaskan:
+
+1. penanggung jawab dan tujuan pekerjaan;
+2. nama/lokasi berkas yang dibuat atau diubah;
+3. input, output, dan cara menjalankan atau membukanya;
+4. asumsi dan keputusan yang digunakan;
+5. pemeriksaan yang sudah dijalankan beserta hasilnya;
+6. keterbatasan, masalah yang masih terbuka, dan ketergantungan berikutnya.
 
 ---
 
@@ -75,8 +91,10 @@ tinjau  →  diskusikan/konfirmasi  →  simpan  →  catat
 - **Jangan ubah sel bertanda `# === JANGAN DIUBAH ===`** di template.
 - **Catat hasil lewat `evaluasi()`**, jangan menyalin angka ke Excel secara manual.
 - **Laporkan kedua skenario** (`dengan_lag` dan `tanpa_lag`) dan bandingkan dengan baseline. Model yang tidak mengalahkan baseline `prediksi = peminat_lag1` belum berguna.
+- **Latih setiap model pada dua versi target:** skala asli dan `log1p`. Prediksi dari target log wajib dikembalikan ke skala orang sebelum evaluasi.
+- **Penyetelan hyperparameter wajib memakai `lipatan_waktu()`** dari `fondasi.py`, bukan K-fold acak atau `cv=5`.
 - **Linear Regression** biasanya perlu penskalaan fitur (`StandardScaler`). Lakukan di dalam bagianmu sendiri, dengan `fit` hanya pada data latih.
-- **Metrik utama:** MAE (dalam satuan orang), MAPE, dan R².
+- **Metrik utama:** MAE (dalam satuan orang), MAPE, dan R². RMSLE dicatat sebagai metrik pelengkap.
 
 ---
 
@@ -99,3 +117,5 @@ tinjau  →  diskusikan/konfirmasi  →  simpan  →  catat
 - [ ] `random_state=42`.
 - [ ] Hasil tercatat di `hasil/evaluasi.csv` lewat `evaluasi()`.
 - [ ] Perubahan penting tercatat di `docs/`.
+- [ ] Status, bukti, dependensi, dan lokasi artefak sudah diperbarui di `docs/PEMBAGIAN_TUGAS.md`.
+- [ ] Anggota berikutnya dapat memahami input, output, cara menjalankan, asumsi, dan keterbatasan tanpa penjelasan lisan tambahan.

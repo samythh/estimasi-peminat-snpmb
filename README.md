@@ -2,6 +2,10 @@
 
 **Judul penelitian:** *Estimasi Jumlah Peminat Program Studi Menggunakan Regresi pada Data SNPMB sebagai Dasar Pembentukan Angka Pembanding Antar Perguruan Tinggi*
 
+**Konteks:** Tugas Besar mata kuliah **Machine Learning**.
+
+**Anggota kelompok:** Mikail, Shiddiq, Duha, dan Ihsan.
+
 Proyek ini memprediksi jumlah pendaftar (`peminat`) setiap program studi di seluruh PTN peserta SNPMB, jalur SNBP dan SNBT, tahun 2021–2025. Tiga model regresi (Linear Regression, Random Forest, XGBoost) dilatih di atas fondasi data dan evaluasi yang sama, sehingga hasilnya dapat dibandingkan.
 
 ## Mulai cepat
@@ -40,10 +44,18 @@ python src/ambil_data_snpmb.py --paksa-unduh semua
 | Dokumen | Isi |
 |---|---|
 | [docs/STANDAR_PENGERJAAN.md](docs/STANDAR_PENGERJAAN.md) | Aturan kerja tim — **baca sebelum mulai** |
+| [docs/PEMBAGIAN_TUGAS.md](docs/PEMBAGIAN_TUGAS.md) | Penanggung jawab, status, keluaran, dependensi, dan serah terima |
+| [docs/PANDUAN_ANGGOTA.md](docs/PANDUAN_ANGGOTA.md) | Indeks tutorial kerja Mikail, Ihsan, Shiddiq, dan Duha |
 | [docs/KAMUS_DATA.md](docs/KAMUS_DATA.md) | Arti setiap kolom dan boleh-tidaknya dipakai sebagai fitur |
 | [docs/KEPUTUSAN_METODOLOGI.md](docs/KEPUTUSAN_METODOLOGI.md) | Keputusan metodologis beserta alasannya, siap dikutip di laporan |
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | Riwayat perubahan proyek |
 | [CLAUDE.md](CLAUDE.md) | Panduan untuk Claude Code |
+
+## Aturan dokumentasi tim
+
+Setiap pekerjaan yang mengubah data, kode, model, hasil, laporan, presentasi, pembagian tugas, atau keputusan harus memperbarui dokumentasi yang relevan pada saat yang sama. Status tugas hanya boleh ditandai selesai bila artefak dan bukti pemeriksaannya dapat diakses tim.
+
+Gunakan [docs/PEMBAGIAN_TUGAS.md](docs/PEMBAGIAN_TUGAS.md) sebagai sumber kebenaran untuk kepemilikan dan status tugas, lalu catat perubahan penting di [docs/CHANGELOG.md](docs/CHANGELOG.md). Tujuannya agar semua anggota bekerja dengan asumsi, istilah, data, dan prosedur yang sama.
 
 ## Sumber data
 

@@ -15,7 +15,7 @@ Format tiap entri: **Keputusan** · **Alasan** · *Alternatif yang ditolak*.
 ### K-02 · Tugas regresi dengan target `peminat`
 **Keputusan:** Target adalah jumlah pendaftar per prodi × jalur × tahun. Jenis tugasnya regresi.
 **Alasan:** Yang diprediksi berupa angka, bukan kategori.
-**Catatan:** `peminat` adalah data cacah yang sangat menceng. Lihat T-03.
+**Catatan:** `peminat` adalah data cacah yang sangat menceng. Lihat K-15.
 
 ### K-03 · SNBP dan SNBT tidak dijumlahkan
 **Keputusan:** Kedua jalur diperlakukan sebagai dua deret terpisah. `jalur` menjadi fitur (model gabungan) atau penyaring (model per jalur).
@@ -108,25 +108,42 @@ Format tiap entri: **Keputusan** · **Alasan** · *Alternatif yang ditolak*.
 
 ---
 
-## Hal yang masih terbuka
+## Keputusan fondasi pemodelan
 
-Diputuskan sebelum atau saat pembuatan `fondasi.py`.
+### K-13 · Gunakan `daya_tampung` tahun baris
+**Keputusan:** Fitur memakai `daya_tampung` pada tahun yang sedang diprediksi. `daya_tampung_kini` tidak boleh menjadi fitur historis karena berisi kuota 2026 yang ditempelkan ke semua baris 2021–2025.
+**Alasan:** Kuota tahun berjalan tersedia sebelum pendaftaran, sedangkan kuota 2026 merupakan informasi masa depan bagi baris historis.
+**Asumsi:** Angka `daya_tampung` historis dari API adalah kuota yang diumumkan sebelum pendaftaran, bukan angka hasil revisi setelah seleksi. Data yang tersedia tidak cukup untuk membuktikan asumsi ini, sehingga harus disebutkan sebagai keterbatasan laporan.
+*Ditolak:* memakai `daya_tampung_kini` untuk baris historis.
 
-### T-01 · `daya_tampung_kini` atau `daya_tampung` tahun berjalan?
-`daya_tampung_kini` berisi daya tampung **2026** yang ditempelkan ke semua baris 2021–2025. Contoh: Sistem Informasi Unand baris 2021 berisi 30, padahal daya tampung 2021 adalah 26. Memakainya sebagai fitur untuk baris historis berarti memakai informasi dari masa depan.
-Kandidat pengganti: `daya_tampung` tahun baris itu, yang diumumkan sebelum pendaftaran dan karenanya sah. `daya_tampung_kini` baru relevan saat meramal 2026.
+### K-14 · `is_new` tidak menjadi fitur
+**Keputusan:** `is_new` dikeluarkan dari matriks fitur.
+**Alasan:** Prodi baru tidak memiliki target historis dan otomatis tidak masuk data pemodelan; akibatnya `is_new` selalu 0 pada baris bertarget dan tidak membawa informasi.
 
-### T-02 · `is_new` tidak berguna sebagai fitur
-Bernilai 0 di seluruh 42.930 baris bertarget. Prodi baru tidak punya riwayat, jadi tidak pernah masuk data latih.
+### K-15 · Setiap model memakai target asli dan log
+**Keputusan:** Linear Regression, Random Forest, dan XGBoost masing-masing dilatih dalam dua varian: target asli dan `log1p(peminat)`. Prediksi varian log dikembalikan ke skala orang dengan `expm1` sebelum dinilai.
+**Alasan:** Transformasi target harus seragam antarmodel agar perbedaan skor tetap dapat dibaca sebagai perbedaan algoritma. Pengaruh transformasi log sekaligus menjadi temuan yang dapat dibandingkan.
+**Metrik:** MAE, MAPE, dan R² tetap menjadi metrik utama. RMSLE dicatat sebagai metrik pelengkap karena MAE cenderung didominasi prodi besar, sedangkan MAPE sangat sensitif pada prodi dengan peminat kecil. Baris dengan target nol dikecualikan dari MAPE dan jumlahnya dicatat.
 
-### T-03 · Transformasi log pada target?
-`peminat` menceng kuat (kebanyakan puluhan–ratusan, sedikit ribuan). MAE akan didominasi prodi besar. Pertimbangkan `log1p(peminat)` saat melatih, dengan prediksi dikembalikan ke skala asli sebelum evaluasi.
+### K-16 · Fitur `is_pendidikan` dan `is_psdku`
+**Keputusan:** `is_pendidikan` menandai 12 PTN kependidikan (eks-IKIP) berdasarkan nama PTN. Program kependidikan sendiri sudah tercakup oleh `kelompok_bidang = pendidikan`. `is_psdku` diturunkan dari nama prodi yang memuat `PSDKU`, `KAMPUS`, atau singkatan `K. KAB`/`K, KAB`.
+**Validasi:** Pemetaan `is_pendidikan` diperiksa satu per satu. Pola PSDKU menandai 182 prodi non-fakultas dalam katalog: 170 memiliki target historis dan masuk kandidat pemodelan, sedangkan 12 merupakan prodi baru tanpa target. Tiga bentuk singkatan kampus di Politeknik Negeri Pontianak tertangkap oleh pola tambahan `K. KAB`/`K, KAB`.
+**Keterbatasan:** Kampus cabang yang namanya sama sekali tidak menyebut lokasi tidak dapat dideteksi dari nama. Manfaat prediktif kedua fitur tetap perlu diuji melalui ablasi setelah model tersedia.
 
-### T-04 · Definisi `is_pendidikan` dan `is_psdku`
-Perlu dipastikan: apakah `is_pendidikan` berarti PTN pendidikan (UNP, UPI, UNY, dst.) atau prodi kependidikan? Yang kedua sudah tercakup `kelompok_bidang = pendidikan`. `is_psdku` kemungkinan dideteksi dari nama prodi yang memuat "PSDKU" atau "KAMPUS ...".
+### K-17 · `peminat_lag2` tidak dipakai secara bawaan
+**Keputusan:** Fondasi bawaan hanya memakai `peminat_lag1` dan `daya_tampung_lag1`; `peminat_lag2` tersedia sebagai opsi eksperimen.
+**Alasan:** Pemakaian lag kedua menghilangkan seluruh baris 2022 dan baris lain yang riwayatnya tidak lengkap. Membiarkan nilai kosong hanya untuk model tertentu membuat data latih antarmodel tidak lagi setara, sedangkan imputasi dilarang oleh K-05.
 
-### T-05 · `peminat_lag2` tidak dipakai secara bawaan
-Menyertakannya menghilangkan banyak baris. Jumlah pastinya dilaporkan oleh `muat_data()`.
+### K-18 · Validasi silang berbasis waktu
+**Keputusan:** Penyetelan hyperparameter wajib memakai `lipatan_waktu()` dengan skema *expanding window*. Data uji 2025 tidak disentuh sampai evaluasi akhir.
+
+| Skenario | Lipatan validasi |
+|---|---|
+| Dengan lag | latih 2022 → validasi 2023; latih 2022–2023 → validasi 2024 |
+| Tanpa lag | latih 2021 → validasi 2022; latih 2021–2022 → validasi 2023; latih 2021–2023 → validasi 2024 |
+
+**Alasan:** K-fold biasa dapat membuat model belajar dari tahun yang lebih baru untuk menebak tahun yang lebih lama, sehingga skor validasi terlalu optimistis dan tidak mencerminkan penggunaan model untuk meramal masa depan.
+*Ditolak:* `KFold` acak dan `cross_val_score` dengan pembagian bawaan.
 
 ---
 

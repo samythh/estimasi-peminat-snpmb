@@ -15,20 +15,30 @@ Panduan untuk Claude Code. Detail lengkap ada di `docs/`; berkas ini memuat hal 
 | Berkas | Baca ketika |
 |---|---|
 | `docs/STANDAR_PENGERJAAN.md` | Sebelum mengubah apa pun |
+| `docs/PEMBAGIAN_TUGAS.md` | Sebelum mengambil tugas; cek pemilik, status, dependensi, dan keluaran wajib |
+| `docs/PANDUAN_ANGGOTA.md` | Sebelum mengerjakan tugas anggota; ikuti panduan pribadi dan daftar pemeriksaannya |
 | `docs/KAMUS_DATA.md` | Memilih fitur; kolom *Status fitur* menentukan yang boleh dan dilarang |
-| `docs/KEPUTUSAN_METODOLOGI.md` | Sebelum mengubah keputusan metodologis; bagian *Hal yang masih terbuka* (T-01…T-05) harus diselesaikan saat membuat `fondasi.py` |
-| `docs/CHANGELOG.md` | Setiap perubahan data, kolom, kode, atau jalur **wajib** dicatat di sini |
+| `docs/KEPUTUSAN_METODOLOGI.md` | Sebelum mengubah keputusan metodologis K-01–K-18 |
+| `docs/CHANGELOG.md` | Setiap perubahan penting pada data, kode, model, hasil, dokumen, presentasi, tugas, atau jalur **wajib** dicatat di sini |
+
+## Aturan dokumentasi dan batas tugas
+
+1. `docs/PEMBAGIAN_TUGAS.md` adalah sumber kebenaran untuk pemilik tugas, status, dependensi, dan keluaran wajib. Jangan mengerjakan bagian anggota lain tanpa permintaan eksplisit pengguna.
+2. Setiap perubahan material harus memperbarui dokumentasi terkait pada giliran yang sama: metodologi → `KEPUTUSAN_METODOLOGI.md`, data/fitur → `KAMUS_DATA.md`, aturan kerja → `STANDAR_PENGERJAAN.md`, tugas/status → `PEMBAGIAN_TUGAS.md`, dan seluruh perubahan penting → `CHANGELOG.md`.
+3. Jangan menandai tugas **Selesai** tanpa artefak yang dapat diperiksa dan bukti pemeriksaan. Untuk berkas di luar repo, catat tautan atau lokasi finalnya.
+4. Saat menyerahkan pekerjaan, dokumentasikan nama berkas, cara menjalankan, asumsi, hasil pemeriksaan, keterbatasan, dan pekerjaan lanjutan yang masih menunggu.
+5. Jika dokumentasi saling bertentangan, jangan memilih diam-diam. Selaraskan keputusan dan catat perubahannya sebelum melanjutkan bagian yang terdampak.
 
 ## Struktur
 
 ```
-src/             ambil_data_snpmb.py, fitur_kelompok_bidang.py   (fondasi.py direncanakan)
+src/             ambil_data_snpmb.py, fitur_kelompok_bidang.py, fondasi.py
 analisis/        analisis & grafik contoh Unand
-notebooks/       00_baseline.ipynb, template_model.ipynb          (direncanakan)
+notebooks/       00_baseline.ipynb, template_model.ipynb
 data/mentah/     mentah_snbp.json, mentah_snbt.json   — JANGAN DIUBAH
 data/olahan/     snpmb_panel.csv (43.449 baris, 24 kolom), peminat_provinsi_snbt.csv
 data/contoh_unand/
-hasil/grafik/    (hasil/evaluasi.csv direncanakan)
+hasil/           evaluasi.csv dan grafik/
 ```
 
 Jalur di kode selalu relatif terhadap akar proyek: `AKAR = Path(__file__).resolve().parents[1]`.
@@ -46,7 +56,7 @@ python analisis/analisa_tren_unand.py SNBT
 
 ## Lingkungan
 
-Windows 11, Python 3.13. Terpasang: `requests`, `pandas` 3.0.5, `numpy`, `matplotlib`. **Belum terpasang:** `scikit-learn`, `xgboost`, `notebook` (lihat `requirements.txt`). Konsol memerlukan `sys.stdout.reconfigure(encoding="utf-8")`; CSV ditulis `utf-8-sig`.
+Windows 11, Python 3.13. Dependensi proyek tercantum di `requirements.txt`, termasuk `scikit-learn`, `xgboost`, dan `notebook`. Konsol memerlukan `sys.stdout.reconfigure(encoding="utf-8")`; CSV ditulis `utf-8-sig`.
 
 ## Aturan yang tidak boleh dilanggar
 
@@ -62,7 +72,7 @@ Windows 11, Python 3.13. Terpasang: `requests`, `pandas` 3.0.5, `numpy`, `matplo
 
 ## Jebakan yang sudah diketahui
 
-- `daya_tampung_kini` berisi nilai **2026** di semua baris 2021–2025; jangan dipakai sebagai fitur baris historis tanpa keputusan T-01.
+- `daya_tampung_kini` berisi nilai **2026** di semua baris 2021–2025; fitur historis memakai `daya_tampung` sesuai K-13.
 - `is_new` selalu 0 pada baris bertarget; tidak berguna sebagai fitur.
 - `terima` kosong 100% di SNBT.
 - API mengembalikan `200 OK` berisi `[]` untuk `id_ptn` yang salah; kegagalannya senyap.
