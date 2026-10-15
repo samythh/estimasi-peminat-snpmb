@@ -1,0 +1,9 @@
+{
+  "status": "lolos",
+  "pemeriksaan": [
+    "Sel di luar ISI BAGIAN INI identik dengan template, kecuali penomoran nama notebook pada petunjuk markdown.",
+    "dengan_lag: fondasi lolos; latih=23445, uji=9416, fitur=72; lipatan temporal lolos.",
+    "tanpa_lag: fondasi lolos; latih=32959, uji=9799, fitur=70; lipatan temporal lolos.",
+    "Semua sel kode dieksekusi tanpa error; empat kombinasi evaluasi XGBoost lengkap dan ukuran data sesuai fondasi."
+  ]
+}

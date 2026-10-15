@@ -23,7 +23,7 @@ Kalau ada aturan yang menurutmu keliru, jangan dilanggar diam-diam. Bahas dulu d
 
 **Penamaan berkas:**
 - Skrip: `kata_kerja_objek.py`, huruf kecil dan garis bawah (`ambil_data_snpmb.py`).
-- Notebook: diberi nomor urut dan nama model (`01_linear_regression.ipynb`, `02_random_forest.ipynb`, `03_xgboost.ipynb`).
+- Notebook: diberi nomor urut dan nama model (`01_linear_regression.ipynb`, `02_random_forest.ipynb`, `04_xgboost.ipynb`).
 - Grafik: `topik_cakupan_periode.png` (`tren_peminat_unand_2021_2025.png`), selalu disertai CSV nilai dengan nama yang sama.
 
 ---

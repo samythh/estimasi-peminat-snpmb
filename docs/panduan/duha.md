@@ -58,7 +58,7 @@ Gunakan jalur relatif terhadap akar proyek dan cache pembacaan data dengan mekan
 ### Membuat notebook
 
 ```powershell
-Copy-Item notebooks/template_model.ipynb notebooks/03_xgboost.ipynb
+Copy-Item notebooks/template_model.ipynb notebooks/04_xgboost.ipynb
 ```
 
 Pada sel `# === ISI BAGIAN INI ===`:

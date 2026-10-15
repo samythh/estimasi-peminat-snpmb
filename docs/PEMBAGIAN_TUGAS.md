@@ -47,7 +47,7 @@ Tahap ini dimulai setelah fondasi dan template Mikail selesai. Semua model wajib
 | Mikail | Baseline rata-rata per kelompok bidang; baseline lag-1 sebagai pembanding tambahan | `notebooks/00_baseline.ipynb` dan hasil baseline di `hasil/evaluasi.csv` | **Selesai.** Terdapat 9 baris hasil baseline tanpa hasil model anggota lain |
 | Ihsan | Linear Regression | `notebooks/01_linear_regression.ipynb` dan baris evaluasi model | **Belum tersedia di repo** |
 | Shiddiq | Random Forest, feature importance, dan rentang prediksi untuk prodi baru | `notebooks/02_random_forest.ipynb`, hasil evaluasi, feature importance, dan metode rentang prediksi yang terdokumentasi | **Belum tersedia di repo** |
-| Duha | XGBoost | `notebooks/03_xgboost.ipynb` dan baris evaluasi model | **Belum tersedia di repo** |
+| Duha | XGBoost | `notebooks/04_xgboost.ipynb` dan baris evaluasi model | **Berjalan — siap diserahkan.** Empat eksperimen dan bukti pemeriksaan tersedia; lihat `docs/HASIL_XGBOOST.md`. Belum mengalahkan baseline lag-1. |
 
 Setiap model wajib menjalankan:
 

@@ -6,6 +6,26 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Duha — penomoran XGBoost] — 2026-10-15
+
+- Menggunakan `notebooks/04_xgboost.ipynb` sesuai permintaan Duha sebagai anggota keempat.
+- Menyesuaikan rujukan nama notebook pada skrip, dokumentasi hasil, panduan Duha, standar penamaan, dan pembagian tugas.
+- Memperbarui contoh nama pada markdown notebook salinan; kode fondasi, template bersama, dan sel kode terkunci tetap utuh.
+- Validasi dijalankan ulang tanpa melatih ulang atau mengubah hasil evaluasi.
+
+---
+
+## [Duha — XGBoost] — 2026-10-11
+
+- Menambahkan notebook XGBoost dengan empat eksperimen sesuai panduan, tanpa tuning pada data uji.
+- Menambahkan empat baris evaluasi melalui fondasi; hasil baseline dipertahankan.
+- Menambahkan cara menjalankan, dependensi XGBoost, pemeriksaan, dan catatan serah terima.
+- Memperbarui status XGBoost Duha; pekerjaan anggota lain dan tahap lain tidak diubah.
+- Model belum mengalahkan baseline lag-1. RMSLE target asli tidak tersedia karena prediksi negatif, sesuai fondasi.
+- Tidak mengubah data mentah, fondasi, atau template bersama.
+
+---
+
 ## [0.7.0] — 2026-09-25
 
 Panduan kerja terpisah untuk setiap anggota kelompok.

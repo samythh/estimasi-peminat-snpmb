@@ -1,0 +1,7 @@
+# Dependensi langsung yang dipakai untuk mereproduksi XGBoost (Python 3.13).
+-r requirements.txt
+xgboost==3.4.1
+scikit-learn==1.9.1
+nbclient==0.11.0
+nbformat==5.11.1
+ipykernel==7.4.0
