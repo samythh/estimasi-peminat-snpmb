@@ -6,6 +6,29 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [0.7.1] — 2026-10-17
+
+Hasil model Linear Regression (Ihsan).
+
+### Ditambahkan
+- `notebooks/01_linear_regression.ipynb`, salinan template dengan `NAMA_MODEL = "linear_regression"` dan `make_pipeline(StandardScaler(), LinearRegression())`; sel *JANGAN DIUBAH* tidak disentuh.
+- Empat baris `linear_regression` di `hasil/evaluasi.csv` (jalur gabungan):
+
+  | skenario | target | MAE | MAPE | R² | RMSLE | prediksi negatif |
+  |---|---|---|---|---|---|---|
+  | dengan_lag | asli | 100,60 | 192,72 | 0,9032 | – | 769 |
+  | dengan_lag | log | 630,51 | 91,28 | −527,06 | 0,7422 | 0 |
+  | tanpa_lag | asli | 244,04 | 384,42 | 0,3792 | – | 1.163 |
+  | tanpa_lag | log | 235,73 | 97,15 | −0,9178 | 0,9062 | 0 |
+
+### Catatan untuk tim
+- Linear Regression belum mengalahkan `baseline_lag1` (MAE 67,54) pada skenario `dengan_lag`; pada `tanpa_lag` kedua target (MAE 244,04 dan 235,73) lebih baik daripada `baseline_rata_kelompok` (MAE 299,17).
+- Prediksi negatif dilaporkan apa adanya, tidak dipotong; RMSLE kosong untuk target asli karena itu.
+- Target log `dengan_lag` tidak stabil: `log1p(peminat)` dimodelkan linear terhadap `peminat_lag1` yang berskala asli, sehingga prodi dengan lag besar (lag-1 uji hingga 6.371, maksimum latih 4.570) mendapat prediksi eksponensial setelah `dari_log()` (maks 994.387; 54 prediksi > 3× maksimum target latih). Perbaikan, misalnya log pada fitur lag, mengubah fitur/algoritma sehingga **menunggu keputusan tim** dan belum diterapkan.
+- Cara menjalankan: bangun panel dengan `python src/ambil_data_snpmb.py` (folder `data/olahan/` tidak di-commit), lalu *Restart & Run All* pada notebook.
+
+---
+
 ## [0.7.0] — 2026-09-25
 
 Panduan kerja terpisah untuk setiap anggota kelompok.

@@ -45,7 +45,7 @@ Tahap ini dimulai setelah fondasi dan template Mikail selesai. Semua model wajib
 | Penanggung jawab | Model/tugas | Keluaran wajib | Status dan bukti |
 |---|---|---|---|
 | Mikail | Baseline rata-rata per kelompok bidang; baseline lag-1 sebagai pembanding tambahan | `notebooks/00_baseline.ipynb` dan hasil baseline di `hasil/evaluasi.csv` | **Selesai.** Terdapat 9 baris hasil baseline tanpa hasil model anggota lain |
-| Ihsan | Linear Regression | `notebooks/01_linear_regression.ipynb` dan baris evaluasi model | **Belum tersedia di repo** |
+| Ihsan | Linear Regression | `notebooks/01_linear_regression.ipynb` dan baris evaluasi model | **Selesai.** Notebook berjalan tanpa error dari atas; hanya sel *ISI BAGIAN INI* yang diubah (`make_pipeline(StandardScaler(), LinearRegression())`, tanpa penyetelan). Empat baris `linear_regression` (gabungan; dengan/tanpa lag × asli/log) tercatat di `hasil/evaluasi.csv`. Tidak ada konfigurasi yang mengalahkan `baseline_lag1` (MAE terbaik 100,60 vs 67,54 pada `dengan_lag`/asli). Target asli menghasilkan 769 (`dengan_lag`) dan 1.163 (`tanpa_lag`) prediksi negatif sehingga RMSLE kosong. Target log `dengan_lag` meledak (R² −527, prediksi maks 994.387) karena log target dimodelkan linear terhadap `peminat_lag1` berskala asli; 54 prediksi uji > 3× maksimum latih |
 | Shiddiq | Random Forest, feature importance, dan rentang prediksi untuk prodi baru | `notebooks/02_random_forest.ipynb`, hasil evaluasi, feature importance, dan metode rentang prediksi yang terdokumentasi | **Belum tersedia di repo** |
 | Duha | XGBoost | `notebooks/03_xgboost.ipynb` dan baris evaluasi model | **Belum tersedia di repo** |
 
