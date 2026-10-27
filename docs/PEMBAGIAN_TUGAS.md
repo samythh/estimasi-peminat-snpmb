@@ -34,7 +34,7 @@ Status tidak boleh diubah menjadi **Selesai** hanya berdasarkan kabar lisan. Can
 | Mikail | Pemetaan kelompok bidang, pemilihan fitur, pembagian data latih/uji, fungsi evaluasi, dan template notebook | `src/fitur_kelompok_bidang.py`, `src/fondasi.py`, `notebooks/template_model.ipynb`, serta dokumentasi metodologi | **Selesai.** Fondasi lolos pemeriksaan sintaks, kebocoran fitur, NaN, pembagian temporal, dan lipatan waktu |
 | Ihsan | BAB I: latar belakang, rumusan masalah, batasan, tujuan, manfaat; BAB II: tinjauan pustaka; memeriksa tautan jurnal, nama penulis, dan judul | Dokumen BAB I–II dan daftar pustaka terverifikasi | **Belum tersedia di repo** |
 | Shiddiq | Revisi PPT mengikuti judul yang disetujui; hapus “Universitas Andalas” dari rumusan masalah/tujuan 4–5; ubah manfaat menjadi “Manfaat bagi Perguruan Tinggi”; koreksi 216% menjadi 21,6% dan 473% menjadi 47,3%; hapus referensi ganda; ganti “Zub dkk.” menjadi “Raftopoulos dkk. (2024)” | PPT revisi | **Belum tersedia di repo** |
-| Duha | Menu Eksplorasi Data di Streamlit: grafik tren peminat per prodi dengan filter PTN, jalur, dan tahun menggunakan CSV yang tersedia | Aplikasi atau modul Streamlit yang dapat dijalankan | **Belum tersedia di repo** |
+| Duha | Menu Eksplorasi Data di Streamlit: grafik tren peminat per prodi dengan filter PTN, jalur, dan tahun menggunakan CSV yang tersedia | Aplikasi atau modul Streamlit yang dapat dijalankan | **Berjalan.** Dashboard awal di `dashboard/streamlit_app.py`; enam menu lolos AppTest. Integrasi prediksi dan verifikasi deployment belum selesai. Lihat `docs/DASHBOARD_STREAMLIT.md` |
 
 ## Tahap 2 — Pelatihan model
 

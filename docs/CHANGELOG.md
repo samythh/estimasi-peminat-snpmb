@@ -6,6 +6,16 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Dashboard awal] — 2026-10-27
+
+- Menambahkan dashboard berbahasa sederhana dengan sidebar tombol berikon.
+- Menambahkan pencarian dan perbandingan jurusan, hasil evaluasi, serta panduan istilah.
+- Menyiapkan entry point `dashboard/streamlit_app.py`, dependensi khusus cloud, dan tema.
+- Startup memakai skrip resmi untuk membangun panel dari snapshot repo.
+- Enam menu lolos AppTest. Perkiraan baru belum diintegrasikan; deployment menunggu verifikasi layanan.
+- Petunjuk dan bukti tampilan tersedia di `docs/DASHBOARD_STREAMLIT.md`.
+
+
 ## [Duha — penomoran XGBoost] — 2026-10-15
 
 - Menggunakan `notebooks/04_xgboost.ipynb` sesuai permintaan Duha sebagai anggota keempat.
