@@ -6,6 +6,33 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Shiddiq — Random Forest] — 2026-10-29
+
+Hasil model Random Forest, penyetelan hyperparameter, dan feature importance (branch `random-forest-02-shiddiq`; rentang prediksi prodi baru belum dikerjakan).
+
+### Ditambahkan
+- `notebooks/02_random_forest.ipynb`, salinan template dengan `NAMA_MODEL = "random_forest"`; sel *JANGAN DIUBAH* tidak disentuh. Sel *ISI BAGIAN INI* diubah, dan ditambah sel penyetelan serta feature importance di luar sel terkunci.
+- `hasil/tuning_random_forest.csv`: skor validasi seluruh kandidat. Penyetelan memakai `lipatan_waktu()` saja (data uji 2025 tidak disentuh), 24 kandidat (bawaan + acak, `random_state=42`), 100 pohon saat pencarian. Satu konfigurasi bersama dipilih lewat rata-rata peringkat MAE di keempat kombinasi: `max_depth=30`, `min_samples_leaf=1`, `max_features=0.5`, model akhir `n_estimators=300`.
+- `hasil/grafik/importance_random_forest_2021_2024.csv` dan `.png`: impurity dan permutasi grup (pada lipatan validasi waktu), kolom one-hot digabung ke fitur asal. Grafik utama memakai target log, dipilih dari skor validasi.
+- Empat baris `random_forest` di `hasil/evaluasi.csv` (jalur gabungan):
+
+  | skenario | target | MAE | MAPE | R² | RMSLE | prediksi negatif |
+  |---|---|---|---|---|---|---|
+  | dengan_lag | asli | 104,13 | 38,07 | 0,7716 | 0,4213 | 0 |
+  | dengan_lag | log | 82,03 | 29,06 | 0,8902 | 0,3894 | 0 |
+  | tanpa_lag | asli | 149,08 | 104,04 | 0,7247 | 0,7207 | 0 |
+  | tanpa_lag | log | 151,29 | 59,07 | 0,6553 | 0,6573 | 0 |
+
+### Catatan untuk tim
+- Random Forest belum mengalahkan `baseline_lag1` (MAE 67,54; R² 0,9465) pada `dengan_lag`; pada `tanpa_lag` kedua target lebih baik daripada `baseline_rata_kelompok` (MAE 299,17).
+- Pengaturan bawaan (sebelum penyetelan) menghasilkan MAE 115,28 / 93,69 (`dengan_lag`, asli / log) dan 155,91 / 154,03 (`tanpa_lag`, asli / log). Perbaikan di validasi 2023–2024 hanya sekitar 2% (MAE rata-rata 128,16 menjadi 125,77) dengan 2–3 lipatan, sehingga skornya berisik.
+- Pada `dengan_lag`, model hampir seluruhnya bersandar pada `peminat_lag1` (permutasi: MAE naik ±299 orang; fitur lain paling besar ±5). Feature importance bukan bukti sebab-akibat; keterbatasannya tertulis di notebook.
+- Cara menjalankan: bangun panel dengan `python src/ambil_data_snpmb.py` (folder `data/olahan/` tidak di-commit), lalu *Restart & Run All* dari dalam folder repo. Penyetelan dan importance memakai berkas CSV tersimpan; atur `ULANG_TUNING` / `ULANG_IMPORTANCE` ke `True` untuk menghitung ulang (±20 dan ±10 menit).
+- Untuk Mikail: sel pertama template mencari folder `src/` dengan loop tanpa kondisi berhenti, sehingga berputar tanpa akhir bila notebook dijalankan dari luar folder repo. Tidak diubah; dilaporkan saja.
+- Belum ada: rentang prediksi prodi baru (persentil antarpohon) dan cakupannya pada 2024. Contoh prodi baru menunggu fungsi masukan prodi baru dari Mikail agar melewati transformasi yang sama dengan data latih.
+
+---
+
 ## [0.7.0] — 2026-09-25
 
 Panduan kerja terpisah untuk setiap anggota kelompok.
