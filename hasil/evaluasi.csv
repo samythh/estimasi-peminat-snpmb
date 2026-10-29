@@ -8,3 +8,7 @@
 2026-09-25T13:45:57,baseline_lag1,dengan_lag,gabungan,asli,23445,9416,1,67.54,24.33,0,0.9465,0.3746,0,
 2026-09-25T13:45:57,baseline_lag1,dengan_lag,SNBP,asli,11729,4707,1,48.96,24.07,0,0.94,0.3568,0,
 2026-09-25T13:45:57,baseline_lag1,dengan_lag,SNBT,asli,11716,4709,1,86.12,24.59,0,0.9453,0.3916,0,
+2026-10-29T12:00:03,random_forest,dengan_lag,gabungan,asli,23445,9416,72,115.28,38.54,0,0.6693,0.4374,0,
+2026-10-29T12:00:24,random_forest,dengan_lag,gabungan,log,23445,9416,72,93.69,31.93,0,0.816,0.4127,0,
+2026-10-29T12:00:43,random_forest,tanpa_lag,gabungan,asli,32959,9799,70,155.91,106.81,0,0.6946,0.7355,0,
+2026-10-29T12:01:02,random_forest,tanpa_lag,gabungan,log,32959,9799,70,154.03,61.12,0,0.6438,0.6762,0,
