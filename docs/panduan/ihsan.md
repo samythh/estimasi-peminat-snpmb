@@ -71,17 +71,24 @@ Buka salinan tersebut. Pada sel `# === ISI BAGIAN INI ===`:
 
 1. Ubah `NAMA_MODEL` menjadi `"linear_regression"`.
 2. Biarkan `JALUR_DIPAKAI = [None]` kecuali tim menyepakati evaluasi per jalur.
-3. Aktifkan model berikut:
+3. Aktifkan ketiga baris contoh Linear Regression, sehingga isinya menjadi:
 
 ```python
-return make_pipeline(StandardScaler(), LinearRegression())
+def buat_model(target):
+    if target == "log":
+        return make_pipeline(log_fitur(), StandardScaler(), LinearRegression())
+    return make_pipeline(StandardScaler(), LinearRegression())
 ```
+
+   `log_fitur()` memberi log pada fitur yang sangat menceng hanya untuk target log, supaya prediksi tidak meledak (K-23).
 
 4. Hapus atau nonaktifkan `DummyRegressor` sementara.
 5. Jangan mengubah sel `# === JANGAN DIUBAH ===`.
 6. Jalankan semua sel dari atas.
 
-Template otomatis menjalankan skenario `dengan_lag` dan `tanpa_lag`, masing-masing pada target asli dan log.
+Template otomatis menjalankan skenario `dengan_lag`, `tanpa_lag`, dan `tanpa_riwayat_sendiri`, masing-masing pada target asli dan log.
+
+Notebook yang disalin dari template versi lama memanggil `buat_model()` tanpa argumen. Salin ulang dari template terbaru, atau salin ulang ketiga sel `# === JANGAN DIUBAH ===` dari template terbaru ke notebookmu.
 
 ### Penyetelan dan interpretasi
 
