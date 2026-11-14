@@ -1,51 +1,43 @@
-# Hasil XGBoost
-
-Pekerjaan ini hanya mencakup notebook XGBoost, hasil evaluasi, dan bukti pemeriksaannya. Tidak mencakup aplikasi atau BAB laporan.
+# Hasil XGBoost Duha — fondasi versi 2
 
 ## Berkas dan cara menjalankan
 
-- `notebooks/04_xgboost.ipynb`: empat eksperimen lengkap dengan output eksekusi.
-- `hasil/evaluasi.csv`: empat baris XGBoost, sembilan baseline tetap utuh.
+- `notebooks/03_xgboost.ipynb`: enam eksperimen dengan output eksekusi.
+- `hasil/evaluasi.csv`: enam baris XGBoost versi fondasi 2; 15 baris baseline dari `main` dipertahankan.
 - `scripts/jalankan_xgboost.py`: menjalankan notebook dengan interpreter aktif.
-- `scripts/validasi_xgboost.py` dan `hasil/hasil_validasi_xgboost.json`: pemeriksaan tanpa pelatihan ulang.
-- `requirements-xgboost.txt`: versi dependensi langsung yang dipakai saat eksekusi.
+- `scripts/validasi_xgboost.py` dan `hasil/hasil_validasi_xgboost.json`: pemeriksaan tanpa melatih ulang.
 
-Dari akar proyek, gunakan Python 3.13:
+Dari akar repo dengan Python 3.13:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-xgboost.txt
 .\.venv\Scripts\python.exe src/ambil_data_snpmb.py
+.\.venv\Scripts\python.exe scripts/jalankan_xgboost.py
 .\.venv\Scripts\python.exe scripts/validasi_xgboost.py
 ```
 
-Hasil dapat dibaca langsung di notebook tanpa pelatihan ulang. Untuk mereproduksi konfigurasi yang sama:
+Notebook memuat data melalui `muat_data()`. Sel evaluasi template memanggil `latih_dan_prediksi()` sehingga prodi uji tidak ikut dilatih pada dua skenario prodi baru. Hasil ditulis oleh `evaluasi()`; menjalankan ulang konfigurasi yang sama mengganti enam baris XGBoost dengan kunci yang sama. Data 2025 tidak dipakai untuk memilih parameter.
 
-```powershell
-.\.venv\Scripts\python.exe scripts/jalankan_xgboost.py
-```
+## Konfigurasi
 
-Perintah tersebut menimpa empat baris evaluasi dengan kunci yang sama. Tidak ada tuning atau early stopping menggunakan 2025. Jangan mengubah parameter berdasarkan skor uji yang sudah diketahui.
-
-## Konfigurasi dan hasil
-
-XGBoost 3.4.1; scikit-learn 1.9.1; pandas 3.0.5; NumPy 2.5.3. Semua eksperimen menggunakan `n_estimators=500`, `learning_rate=0.05`, `max_depth=6`, `random_state=42`, `n_jobs=-1`. Konfigurasi mengikuti panduan sebelum penilaian, tanpa tuning atau early stopping. Jalur gabungan digunakan sebagai kumpulan observasi terpisah dengan fitur jalur, bukan jumlah peminat lintas jalur.
+XGBoost 3.4.1; `n_estimators=500`, `learning_rate=0.05`, `max_depth=6`, `random_state=42`, dan `n_jobs=-1`. Konfigurasi mengikuti panduan Duha sebelum evaluasi, tanpa penyetelan atau early stopping. `buat_model(target)` menerima jenis target sesuai template, tetapi XGBoost memakai konfigurasi sama untuk target asli dan log. Jalur gabungan berarti SNBP dan SNBT menjadi observasi terpisah dengan fitur jalur; jumlah peminat kedua jalur tidak dijumlahkan.
 
 | Skenario | Target | Latih | Uji | Fitur | MAE (orang) | MAPE (%) | R² | RMSLE | Prediksi negatif |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Dengan lag | Asli | 23.445 | 9.416 | 72 | 114,15 | 50,59 | 0,6501 | Tidak tersedia | 288 |
-| Dengan lag | Log | 23.445 | 9.416 | 72 | 102,75 | 32,29 | 0,7247 | 0,4130 | 0 |
-| Tanpa lag | Asli | 32.959 | 9.799 | 70 | 173,69 | 125,20 | 0,6488 | Tidak tersedia | 396 |
-| Tanpa lag | Log | 32.959 | 9.799 | 70 | 175,57 | 63,72 | 0,5219 | 0,7009 | 0 |
+| Dengan lag | Asli | 21.507 | 8.508 | 76 | 70,23 | 33,61 | 0,9312 | Tidak tersedia | 124 |
+| Dengan lag | Log | 21.507 | 8.508 | 76 | 68,67 | 24,59 | 0,9371 | 0,3615 | 0 |
+| Tanpa lag | Asli | 32.959 | 9.799 | 71 | 185,86 | 146,25 | 0,6279 | Tidak tersedia | 491 |
+| Tanpa lag | Log | 32.959 | 9.799 | 71 | 171,16 | 71,56 | 0,6165 | 0,7130 | 0 |
+| Tanpa riwayat sendiri | Asli | 22.453 | 8.834 | 73 | 137,54 | 104,25 | 0,7153 | Tidak tersedia | 414 |
+| Tanpa riwayat sendiri | Log | 22.453 | 8.834 | 73 | 129,35 | 49,78 | 0,7190 | 0,5763 | 0 |
 
-Tidak ada target nol yang dikecualikan dari MAPE pada empat eksperimen ini. RMSLE target asli tidak tersedia karena prediksi negatif; ini perilaku evaluasi bersama, bukan error eksekusi. Prediksi tidak dipangkas setelah melihat data uji.
+MAE terendah XGBoost pada tiap skenario berasal dari target log. Pembanding yang sepadan pada versi fondasi 2: `baseline_lag1` dengan lag MAE 66,11; `baseline_rata_kelompok` tanpa lag MAE 299,57; `baseline_rata_sejenis` tanpa riwayat sendiri MAE 254,52. XGBoost belum mengalahkan baseline dengan lag, tetapi mengalahkan baseline pada dua skenario prodi baru. Perbandingan lintas skenario tidak langsung setara karena baris uji berbeda.
 
-Pada skenario dengan lag, baseline lag-1 memiliki MAE 67,54, MAPE 24,33%, R² 0,9465, dan RMSLE 0,3746. **XGBoost belum mengalahkan baseline lag-1.** Terhadap baseline rata-rata kelompok pada skenario yang sama (MAE 304,55), kedua varian XGBoost memiliki MAE lebih rendah.
-
-Pada skenario tanpa lag, MAE kedua varian lebih rendah daripada baseline rata-rata kelompok (299,17). Target asli lebih baik pada MAE/R², sedangkan target log lebih baik pada MAPE dan menyediakan prediksi nonnegatif. Tidak disimpulkan ada satu varian yang unggul pada seluruh metrik. Perbandingan dengan baseline lag-1 lintas skenario tidak setara karena fitur dan baris uji berbeda.
+Tidak ada target nol yang dikecualikan dari MAPE. RMSLE target asli tidak tersedia karena ada prediksi negatif; angka negatif itu tidak dapat ditafsirkan sebagai jumlah peminat. Prediksi tidak dipangkas setelah melihat data uji.
 
 ## Pemeriksaan dan keterbatasan
 
-Seluruh sel kode selain ISI BAGIAN INI identik dengan template. Contoh nama notebook pada petunjuk markdown disesuaikan menjadi 04_xgboost.ipynb atas permintaan Duha. Semua sel kode memiliki output eksekusi tanpa error. Fondasi, pembagian temporal, dan urutan lipatan waktu diperiksa. Jumlah baris/fitur evaluasi sesuai fondasi. Data mentah, template, dan kode fondasi tidak diubah.
+Tiga sel `JANGAN DIUBAH` dan semua sel di luar `ISI BAGIAN INI` identik dengan template versi 2. Seluruh sel notebook dieksekusi tanpa error. `scripts/validasi_xgboost.py` memeriksa tiga skenario, urutan waktu pada validasi, enam kombinasi evaluasi, versi fondasi, dan ukuran data. Dashboard Hasil Pengujian untuk ketiga skenario juga lolos AppTest tanpa exception.
 
-Asumsi kuota historis, pengelompokan bidang berbasis aturan, dan deteksi PSDKU mengikuti K-08, K-13, dan K-16. Konfigurasi berasal dari panduan Duha sebelum evaluasi; bukan hasil pencarian parameter optimal. Model belum mengalahkan baseline lag-1. Pengembangan berikutnya perlu protokol validasi latih yang disepakati tim karena hasil 2025 sudah diketahui.
+Asumsi kuota historis, pengelompokan bidang berbasis aturan, dan deteksi PSDKU mengikuti keputusan metodologi bersama. Model akhir untuk aplikasi dan pemilihan model terbaik masih menjadi tahap integrasi Mikail setelah hasil semua anggota tersedia.

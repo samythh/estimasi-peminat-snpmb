@@ -14,3 +14,9 @@
 2026-11-12T17:16:57,baseline_rata_sejenis,tanpa_riwayat_sendiri,gabungan,asli,22453,8834,1,254.52,382.57,0,0.3087,1.2352,0,,2
 2026-11-12T17:16:57,baseline_rata_sejenis,tanpa_riwayat_sendiri,SNBP,asli,11216,4409,1,173.9,308.96,0,0.4217,1.1497,0,,2
 2026-11-12T17:16:57,baseline_rata_sejenis,tanpa_riwayat_sendiri,SNBT,asli,11237,4425,1,334.86,455.91,0,0.2424,1.3149,0,,2
+2026-11-14T11:08:24,xgboost,dengan_lag,gabungan,asli,21507,8508,76,70.23,33.61,0,0.9312,,124,,2
+2026-11-14T11:08:24,xgboost,dengan_lag,gabungan,log,21507,8508,76,68.67,24.59,0,0.9371,0.3615,0,,2
+2026-11-14T11:08:27,xgboost,tanpa_lag,gabungan,asli,32959,9799,71,185.86,146.25,0,0.6279,,491,,2
+2026-11-14T11:08:30,xgboost,tanpa_lag,gabungan,log,32959,9799,71,171.16,71.56,0,0.6165,0.713,0,,2
+2026-11-14T11:08:32,xgboost,tanpa_riwayat_sendiri,gabungan,asli,22453,8834,73,137.54,104.25,0,0.7153,,414,,2
+2026-11-14T11:08:35,xgboost,tanpa_riwayat_sendiri,gabungan,log,22453,8834,73,129.35,49.78,0,0.719,0.5763,0,,2

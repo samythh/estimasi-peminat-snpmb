@@ -6,6 +6,16 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Duha — XGBoost dan dashboard fondasi 2] — 2026-11-14
+
+- Menggabungkan fondasi versi 2 dari `main` ke branch Duha. Konflik `hasil/evaluasi.csv` diselesaikan dengan versi `main`; catatan changelog kedua branch digabung.
+- Mengganti nama notebook menjadi `notebooks/03_xgboost.ipynb`, menyalin ulang tiga sel `JANGAN DIUBAH` dari template versi 2, dan mengubah antarmuka menjadi `buat_model(target)`.
+- Menjalankan ulang XGBoost pada tiga skenario × dua target lewat `latih_dan_prediksi()` dan menyimpan enam baris `versi_fondasi = 2` melalui `evaluasi()`.
+- Menyesuaikan skrip validasi dan halaman Hasil Pengujian Streamlit untuk tiga skenario. Dashboard hanya menampilkan hasil dari versi fondasi terbaru.
+- Memperbarui `docs/HASIL_XGBOOST.md`, `docs/DASHBOARD_STREAMLIT.md`, dan status tugas. Deployment Streamlit Cloud masih memerlukan izin admin repo atau fork yang dimiliki akun Duha.
+
+---
+
 ## [0.8.0] — 2026-11-12
 
 Fondasi versi 2: fitur prodi sejenis, skenario ketiga, dan penanda vokasi SNBT. **Semua model wajib dijalankan ulang**; hasil versi 1 tidak setara dengan versi 2.

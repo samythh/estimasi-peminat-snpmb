@@ -200,26 +200,42 @@ def pengujian() -> None:
         st.info("Hasil pengujian belum tersedia. Pengelola perlu menambahkan hasil/evaluasi.csv dari evaluasi kelompok.")
         return
     evaluasi = pd.read_csv(lokasi)
-    mode = st.radio("Informasi yang digunakan", ["Memakai riwayat tahun sebelumnya", "Tanpa riwayat tahun sebelumnya"], horizontal=True)
-    skenario = "dengan_lag" if mode.startswith("Memakai") else "tanpa_lag"
-    hasil = evaluasi[evaluasi.skenario.eq(skenario) & evaluasi.jalur.eq("gabungan")].copy()
+    if "versi_fondasi" not in evaluasi or evaluasi["versi_fondasi"].dropna().empty:
+        st.error("Versi hasil pengujian tidak diketahui. Perbarui hasil/evaluasi.csv dari fondasi terbaru.")
+        return
+    versi = int(evaluasi["versi_fondasi"].max())
+    pilihan = {
+        "Ada riwayat jurusan": "dengan_lag",
+        "Jurusan baru, ada jurusan sejenis": "tanpa_riwayat_sendiri",
+        "Jurusan baru, tanpa pembanding sejenis": "tanpa_lag",
+    }
+    mode = st.radio("Keadaan jurusan yang ingin dibandingkan", list(pilihan), horizontal=True)
+    skenario = pilihan[mode]
+    hasil = evaluasi[evaluasi.skenario.eq(skenario) & evaluasi.jalur.eq("gabungan")
+                    & evaluasi.versi_fondasi.eq(versi)].copy()
     if hasil.empty:
         st.info("Hasil untuk pilihan ini belum tersedia.")
         return
-    model = {"baseline_lag1": "Patokan: peminat tahun lalu", "baseline_rata_kelompok": "Patokan: rata-rata bidang ilmu", "xgboost": "XGBoost"}
+    model = {"baseline_lag1": "Patokan: peminat tahun lalu",
+             "baseline_rata_sejenis": "Patokan: jurusan sejenis",
+             "baseline_rata_kelompok": "Patokan: rata-rata bidang ilmu",
+             "xgboost": "XGBoost", "linear_regression": "Regresi linear",
+             "random_forest": "Random Forest"}
     hasil["Metode"] = hasil.nama_model.map(model).fillna(hasil.nama_model)
     hasil["Metode"] += hasil.apply(lambda r: (" · data asli" if r.target == "asli" else " · data diubah ke skala log") if r.nama_model == "xgboost" else "", axis=1)
     st.info("Lihat besar selisihnya: makin kecil angkanya, makin dekat perkiraan dengan data nyata. Contoh: selisih rata-rata 100 berarti perkiraan meleset sekitar 100 orang per jurusan.", icon=":material/lightbulb:")
-    st.altair_chart(alt.Chart(hasil).mark_bar(color="#2563eb", cornerRadiusEnd=5).encode(x=alt.X("MAE:Q", title="Selisih rata-rata (orang)", scale=alt.Scale(zero=True)), y=alt.Y("Metode:N", title=None, sort="x"), tooltip=["Metode", alt.Tooltip("MAE:Q", title="Selisih rata-rata", format=".2f")]).properties(height=240), width="stretch")
-    if skenario == "dengan_lag" and {"xgboost", "baseline_lag1"}.issubset(set(hasil.nama_model)):
+    st.altair_chart(alt.Chart(hasil).mark_bar(color="#2563eb", cornerRadiusEnd=5).encode(x=alt.X("MAE:Q", title="Selisih rata-rata (orang)", scale=alt.Scale(zero=True)), y=alt.Y("Metode:N", title=None, sort="x"), tooltip=["Metode", alt.Tooltip("MAE:Q", title="Selisih rata-rata", format=".2f")]).properties(height=max(240, 34 * len(hasil))), width="stretch")
+    patokan_model = {"dengan_lag": "baseline_lag1", "tanpa_riwayat_sendiri": "baseline_rata_sejenis",
+                     "tanpa_lag": "baseline_rata_kelompok"}[skenario]
+    if {"xgboost", patokan_model}.issubset(set(hasil.nama_model)):
         xgb = float(hasil.loc[hasil.nama_model.eq("xgboost"), "MAE"].min())
-        patokan = float(hasil.loc[hasil.nama_model.eq("baseline_lag1"), "MAE"].iloc[0])
+        patokan = float(hasil.loc[hasil.nama_model.eq(patokan_model), "MAE"].iloc[0])
         if xgb > patokan:
-            st.warning("Pada pengujian ini, memakai jumlah peminat tahun lalu sebagai patokan masih lebih akurat daripada XGBoost berdasarkan selisih rata-rata. Model belum tentu lebih baik hanya karena lebih rumit.")
+            st.warning("Pada pengujian ini, patokan sederhana masih lebih akurat daripada XGBoost berdasarkan selisih rata-rata. Model belum tentu lebih baik hanya karena lebih rumit.")
     with st.expander("Detail teknis untuk laporan penelitian"):
         st.dataframe(hasil[["Metode", "n_uji", "MAE", "MAPE", "R2", "RMSLE", "n_prediksi_negatif"]].rename(columns={"n_uji": "Baris yang diuji", "n_prediksi_negatif": "Prediksi negatif"}), hide_index=True, width="stretch")
         st.markdown("**MAE:** selisih rata-rata dalam orang. **MAPE:** selisih dalam persen, sangat sensitif pada jumlah peminat kecil. **R²:** ukuran kecocokan terhadap data. **RMSLE:** ukuran selisih pada skala log.\n\nRMSLE kosong jika ada prediksi negatif. Prediksi negatif tidak boleh dibaca sebagai jumlah orang yang mungkin terjadi. Varian log mengubah skala target saat pelatihan dan mengembalikannya ke skala orang saat evaluasi.")
-    st.caption("Data latih: 2021–2024. Data uji: 2025. Hasil berasal dari berkas evaluasi kelompok; model yang belum tercantum belum tersedia di versi ini. Pilihan dengan/tanpa riwayat memiliki baris uji berbeda.")
+    st.caption(f"Data latih: 2021–2024. Data uji: 2025. Fondasi versi {versi}. Hasil berasal dari berkas evaluasi kelompok; model yang belum tercantum belum tersedia. Ketiga pilihan memiliki baris uji berbeda dan tidak dibandingkan langsung satu sama lain.")
 
 
 def panduan() -> None:
