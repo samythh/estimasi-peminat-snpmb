@@ -17,7 +17,7 @@ Jika panel belum tersedia, aplikasi menjalankan `src/ambil_data_snpmb.py` dengan
 
 Pada Streamlit Community Cloud pilih Create app dan gunakan:
 
-- Repository: `samythh/estimasi-peminat-snpmb`
+- Repository deployment mandiri: `duhaalul/estimasi-peminat-snpmb` (fork dari repo kelompok)
 - Branch: `duha-fondasi-v2`
 - Main file path: `dashboard/streamlit_app.py`
 - Advanced settings → Python: `3.13`
@@ -25,7 +25,7 @@ Pada Streamlit Community Cloud pilih Create app dan gunakan:
 
 Dependensi aplikasi berada di `dashboard/requirements.txt`, di sebelah entry point, sehingga deployment tidak memasang paket pelatihan notebook yang tidak digunakan aplikasi. Tema berada di `.streamlit/config.toml`.
 
-Status dokumen ini: paket siap diuji deploy; belum ada URL publik. Akun Duha belum memiliki izin admin pada repo kelompok di Streamlit Cloud. Deployment dapat dilakukan oleh admin repo atau dari fork milik Duha yang memuat branch ini. Setelah deployment berhasil, push perubahan ke branch yang terhubung akan memperbarui aplikasi.
+Status dokumen ini: fork tersedia di https://github.com/duhaalul/estimasi-peminat-snpmb dan branch `duha-fondasi-v2` sudah tersinkron. Belum ada URL Streamlit publik. Deployment mandiri memakai fork milik Duha. Hasil LR/RF terbaru menunggu integrasi Mikail di repo kelompok, lalu perlu disinkronkan ke fork. Setelah deployment berhasil, push perubahan ke branch yang terhubung akan memperbarui aplikasi.
 
 ## Pemeriksaan
 

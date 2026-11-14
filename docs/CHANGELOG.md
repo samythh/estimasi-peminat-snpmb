@@ -8,6 +8,7 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ## [Duha — XGBoost dan dashboard fondasi 2] — 2026-11-14
 
+- Menyiapkan fork `duhaalul/estimasi-peminat-snpmb` beserta branch `duha-fondasi-v2` untuk deployment mandiri; URL aplikasi Cloud belum tersedia.
 - Menggabungkan fondasi versi 2 dari `main` ke branch Duha. Konflik `hasil/evaluasi.csv` diselesaikan dengan versi `main`; catatan changelog kedua branch digabung.
 - Mengganti nama notebook menjadi `notebooks/03_xgboost.ipynb`, menyalin ulang tiga sel `JANGAN DIUBAH` dari template versi 2, dan mengubah antarmuka menjadi `buat_model(target)`.
 - Menjalankan ulang XGBoost pada tiga skenario × dua target lewat `latih_dan_prediksi()` dan menyimpan enam baris `versi_fondasi = 2` melalui `evaluasi()`.
