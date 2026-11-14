@@ -90,10 +90,13 @@ Setiap penyerahan harus menjelaskan:
 - **Selalu muat data lewat `muat_data()` dari `src/fondasi.py`.** Jangan membaca CSV sendiri dan menyusun fitur sendiri, supaya ketiga model memakai data yang persis sama.
 - **Jangan ubah sel bertanda `# === JANGAN DIUBAH ===`** di template.
 - **Catat hasil lewat `evaluasi()`**, jangan menyalin angka ke Excel secara manual.
-- **Laporkan kedua skenario** (`dengan_lag` dan `tanpa_lag`) dan bandingkan dengan baseline. Model yang tidak mengalahkan baseline `prediksi = peminat_lag1` belum berguna.
+- **Laporkan ketiga skenario** (`dengan_lag`, `tanpa_lag`, `tanpa_riwayat_sendiri`) dan bandingkan dengan baseline terkuat di skenario yang sama: `baseline_lag1` untuk `dengan_lag`, `baseline_rata_sejenis` untuk `tanpa_riwayat_sendiri`, dan `baseline_rata_kelompok` untuk `tanpa_lag`. Model yang tidak mengalahkannya belum berguna.
+- **Bandingkan hanya hasil dengan `versi_fondasi` yang sama** di `hasil/evaluasi.csv` (K-22).
 - **Latih setiap model pada dua versi target:** skala asli dan `log1p`. Prediksi dari target log wajib dikembalikan ke skala orang sebelum evaluasi.
 - **Penyetelan hyperparameter wajib memakai `lipatan_waktu()`** dari `fondasi.py`, bukan K-fold acak atau `cv=5`.
-- **Linear Regression** biasanya perlu penskalaan fitur (`StandardScaler`). Lakukan di dalam bagianmu sendiri, dengan `fit` hanya pada data latih.
+- **Linear Regression** biasanya perlu penskalaan fitur (`StandardScaler`). Lakukan di dalam bagianmu sendiri, dengan `fit` hanya pada data latih. Untuk target log, pasang juga `log_fitur()` di awal pipeline (K-23); untuk target asli, jangan.
+- **Transformasi fitur dilakukan di pipeline model**, bukan dengan mengubah `X` dari `muat_data()`.
+- **Nilai model lewat `latih_dan_prediksi()`**, bukan `fit` lalu `predict` langsung. Pada `tanpa_lag` dan `tanpa_riwayat_sendiri`, fungsi ini memastikan prodi uji tidak ikut dilatih (K-24); template sudah memakainya.
 - **Metrik utama:** MAE (dalam satuan orang), MAPE, dan R². RMSLE dicatat sebagai metrik pelengkap.
 
 ---

@@ -45,13 +45,14 @@ Tahap ini dimulai setelah fondasi dan template Mikail selesai. Semua model wajib
 | Penanggung jawab | Model/tugas | Keluaran wajib | Status dan bukti |
 |---|---|---|---|
 | Mikail | Baseline rata-rata per kelompok bidang; baseline lag-1 sebagai pembanding tambahan | `notebooks/00_baseline.ipynb` dan hasil baseline di `hasil/evaluasi.csv` | **Selesai.** Terdapat 9 baris hasil baseline tanpa hasil model anggota lain |
+| Mikail | Fitur prodi sejenis: normalisasi `prodi_normal`, tiga fitur berbasis t−1, skenario `tanpa_riwayat_sendiri`, dan baseline prodi sejenis | `src/fitur_prodi_sejenis.py`, pembaruan `src/fondasi.py` dan `notebooks/00_baseline.ipynb`, hasil di `hasil/evaluasi.csv` | **Selesai (fondasi versi 2, 2026-11-12).** Pemetaan 755 `prodi_normal` disetujui dengan perubahan GEOLOGI dan PEMBENIHAN IKAN (K-20). `python src/fitur_prodi_sejenis.py --uji`: 2.000/2.000 baris sampel cocok dengan hitungan manual. Ketiga skenario × tiga jalur lolos validasi `muat_data()`. Penanda vokasi SNBT (K-19) dan perbaikan `is_psdku` 182 → 188 prodi (K-16) ikut diterapkan. `notebooks/00_baseline.ipynb` dijalankan ulang: 15 baris baseline `versi_fondasi = 2` di `hasil/evaluasi.csv`, pengukuran penanda di `hasil/analisis_penanda_rezim.csv`. Skenario prodi baru dinilai dengan lipatan kelompok prodi (K-24); `log_fitur()` untuk model linear bertarget log (K-23). Template diuji dengan berkas evaluasi terpisah memakai contoh Linear Regression: 6 konfigurasi berjalan. **Dampak:** ketiga model wajib dijalankan ulang (K-22) |
 | Ihsan | Linear Regression | `notebooks/01_linear_regression.ipynb` dan baris evaluasi model | **Belum tersedia di repo** |
 | Shiddiq | Random Forest, feature importance, dan rentang prediksi untuk prodi baru | `notebooks/02_random_forest.ipynb`, hasil evaluasi, feature importance, dan metode rentang prediksi yang terdokumentasi | **Belum tersedia di repo** |
 | Duha | XGBoost | `notebooks/04_xgboost.ipynb` dan baris evaluasi model | **Berjalan — siap diserahkan.** Empat eksperimen dan bukti pemeriksaan tersedia; lihat `docs/HASIL_XGBOOST.md`. Belum mengalahkan baseline lag-1. |
 
 Setiap model wajib menjalankan:
 
-1. Skenario `dengan_lag` dan `tanpa_lag`.
+1. Skenario `dengan_lag`, `tanpa_lag`, dan `tanpa_riwayat_sendiri` pada `versi_fondasi` terbaru (saat ini 2).
 2. Target skala asli dan target `log1p` sesuai K-15.
 3. Evaluasi MAE, MAPE, R², serta RMSLE sebagai metrik pelengkap.
 4. Penyetelan hyperparameter hanya dengan `lipatan_waktu()` bila penyetelan dilakukan.

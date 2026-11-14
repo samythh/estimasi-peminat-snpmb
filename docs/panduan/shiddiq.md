@@ -56,7 +56,7 @@ return RandomForestRegressor(
 
 ### Penyetelan hyperparameter
 
-Jika menyetel parameter, gunakan data latih dan `lipatan_waktu(X_train)` saja. Parameter yang wajar diuji antara lain `n_estimators`, `max_depth`, `min_samples_leaf`, dan `max_features`.
+Jika menyetel parameter, gunakan data latih dan `lipatan_waktu(X_train)` saja. Pada `tanpa_lag` dan `tanpa_riwayat_sendiri`, fungsi ini otomatis memakai lipatan kelompok prodi (15 dan 10 lipatan), jadi penyetelan lebih lama. Parameter yang wajar diuji antara lain `n_estimators`, `max_depth`, `min_samples_leaf`, dan `max_features`.
 
 Jangan memakai `cv=5`, K-fold acak, atau skor data 2025 untuk memilih parameter. Simpan ruang pencarian, skor validasi, parameter terpilih, dan alasan pemilihannya di notebook.
 
@@ -76,7 +76,7 @@ Aturan:
 
 ### Rentang prediksi prodi baru
 
-Prodi baru tidak memiliki lag, sehingga gunakan model/configurasi `tanpa_lag`.
+Prodi baru tidak memiliki riwayat sendiri. Gunakan konfigurasi `tanpa_riwayat_sendiri` bila prodi itu punya prodi sejenis di PTN lain pada tahun sebelumnya, dan `tanpa_lag` bila tidak (K-20).
 
 Metode awal yang diperbolehkan untuk Random Forest adalah persentil prediksi seluruh pohon, misalnya persentil ke-10 dan ke-90. Rentang ini harus disebut **rentang empiris antarpohon**, bukan confidence interval formal.
 
@@ -88,15 +88,15 @@ Jika model dilatih pada target log:
 
 Jangan menyusun sendiri urutan kolom untuk input prodi baru. Koordinasikan dengan Mikail agar input baru melewati transformasi yang sama dengan data latih. Minimal masukan yang perlu disepakati meliputi PTN, jalur, jenjang, portofolio, kelompok bidang, daya tampung, jumlah prodi PTN, provinsi, dan atribut struktural PTN.
 
-Validasi rentang pada data validasi 2024 bila memungkinkan: laporkan berapa persen nilai aktual yang berada di dalam rentang. Jangan melakukan kalibrasi memakai data uji 2025.
+Validasi rentang pada data validasi 2024 bila memungkinkan, memakai lipatan dari `lipatan_waktu()` agar prodi yang divalidasi tidak ikut dilatih (K-24): laporkan berapa persen nilai aktual yang berada di dalam rentang. Jangan melakukan kalibrasi memakai data uji 2025.
 
 ### Pemeriksaan selesai
 
-- Dua skenario dan dua target selesai dijalankan.
+- Tiga skenario dan dua target selesai dijalankan pada `versi_fondasi` terbaru.
 - `random_state=42` dan konfigurasi final tercatat.
 - Hasil tersimpan melalui `evaluasi()`.
 - Feature importance memiliki tabel dan penjelasan keterbatasan.
-- Rentang prediksi hanya memakai skenario tanpa lag untuk prodi baru dan diberi nama yang tepat.
+- Rentang prediksi untuk prodi baru hanya memakai skenario `tanpa_riwayat_sendiri` atau `tanpa_lag`, dan diberi nama yang tepat.
 - Tidak ada pemilihan model berdasarkan data uji.
 
 ## Tahap 3 — BAB IV

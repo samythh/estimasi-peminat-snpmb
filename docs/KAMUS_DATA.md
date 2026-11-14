@@ -70,9 +70,34 @@ Fitur berikut tidak ditulis kembali ke panel. Semuanya dibentuk saat `muat_data(
 | `is_ptnbh`, `is_akademik`, `is_vokasi`, `is_ptkin` | Atribut PTN dari daftar PTN mentah |
 | `provinsi` | Provinsi kedudukan PTN dari daftar PTN mentah |
 | `is_pendidikan` | 1 untuk 12 PTN kependidikan (eks-IKIP), diturunkan dari nama PTN |
-| `is_psdku` | 1 bila nama prodi memuat `PSDKU`, `KAMPUS`, atau pola `K. KAB`/`K, KAB` |
+| `is_psdku` | 1 bila nama prodi memuat `PSDKU`, `KAMPUS`, `K. KAB`/`K, KAB`/`KAMP`, salah ketik `PDSKU`, atau `FIKKIA BANYUWANGI` |
+| `is_rezim_vokasi_snbt` | 1 untuk baris SNBT jenjang D3/D4 tahun ≥ 2024. Fitur skenario `tanpa_lag` (K-19) |
+| `is_lintas_rezim_vokasi_snbt` | 1 untuk baris SNBT jenjang D3/D4 tahun 2024, yang pembanding t−1-nya berasal dari sebelum lonjakan. Fitur skenario `dengan_lag` dan `tanpa_riwayat_sendiri` (K-19) |
+| `prodi_normal` | Nama prodi yang diseragamkan oleh `src/fitur_prodi_sejenis.py`. **Identitas**, bukan fitur; dipakai sebagai kunci prodi sejenis bersama `jenjang` dan `jalur` (K-20) |
+| `rata_peminat_prodi_sejenis_lag1` | Rata-rata peminat prodi sejenis di PTN lain pada t−1. Kosong bila tidak ada pembanding. Fitur `dengan_lag` dan `tanpa_riwayat_sendiri` |
+| `jumlah_ptn_punya_prodi_sejenis_lag1` | Jumlah PTN lain yang punya prodi sejenis pada t−1; juga menunjukkan kekuatan dasar estimasi. Fitur `dengan_lag` dan `tanpa_riwayat_sendiri` |
+| `rasio_peminat_vs_sejenis_lag1` | `peminat_lag1` / `rata_peminat_prodi_sejenis_lag1`. Fitur `dengan_lag` saja |
 
-Pola `is_psdku` mencakup 182 prodi non-fakultas dalam katalog: 170 memiliki target historis dan 12 merupakan prodi baru tanpa target.
+Pola `is_psdku` mencakup 188 prodi non-fakultas dalam katalog: 176 memiliki target historis dan 12 merupakan prodi baru tanpa target.
+
+### Fitur per skenario
+
+| Skenario | Fitur di atas fitur struktural | Baris yang dipakai |
+|---|---|---|
+| `dengan_lag` | `is_lintas_rezim_vokasi_snbt`, `peminat_lag1`, `daya_tampung_lag1`, ketiga fitur prodi sejenis | Lag-1 dan ketiga fitur prodi sejenis terisi (2022–2025) |
+| `tanpa_lag` | `is_rezim_vokasi_snbt` | Semua baris bertarget (2021–2025) |
+| `tanpa_riwayat_sendiri` | `is_lintas_rezim_vokasi_snbt`, rata-rata dan jumlah PTN prodi sejenis | Fitur prodi sejenis terisi (2022–2025) |
+
+Fitur struktural: `daya_tampung`, `jumlah_prodi_ptn`, enam fitur biner PTN/prodi di atas, serta one-hot `jenjang`, `portofolio`, `kelompok_bidang`, `provinsi`, dan `jalur`. Pada data SNBP saja, kedua penanda SNBT tidak dipakai karena selalu 0.
+
+---
+
+## `hasil/`
+
+| Berkas | Isi |
+|---|---|
+| `evaluasi.csv` | Satu baris per model × skenario × jalur × target. Kolom `versi_fondasi` membedakan versi fondasi; baris tanpa versi berasal dari versi 1 dan tidak setara dengan versi 2 (K-22) |
+| `analisis_penanda_rezim.csv` | Pengaruh penanda vokasi SNBT pada baseline, data uji SNBT 2025 (K-19) |
 
 ---
 
