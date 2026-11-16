@@ -1,0 +1,10 @@
+{
+  "status": "lolos",
+  "pemeriksaan": [
+    "Sel di luar ISI BAGIAN INI identik dengan template versi 2.",
+    "dengan_lag: fondasi lolos; latih=21507, uji=8508, fitur=76; lipatan temporal lolos.",
+    "tanpa_lag: fondasi lolos; latih=32959, uji=9799, fitur=71; lipatan temporal lolos.",
+    "tanpa_riwayat_sendiri: fondasi lolos; latih=22453, uji=8834, fitur=73; lipatan temporal lolos.",
+    "Semua sel kode dieksekusi tanpa error; enam kombinasi evaluasi XGBoost versi 2 lengkap dan ukuran data sesuai fondasi."
+  ]
+}

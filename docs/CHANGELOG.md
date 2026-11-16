@@ -6,7 +6,7 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
-## [0.8.2] — 2026-11-16
+## [0.8.6] — 2026-11-16
 
 Random Forest dijalankan ulang pada fondasi versi 2 (tiga skenario × target asli/log), disetel ulang, dilengkapi feature importance dan rentang prediksi prodi baru (branch `random-forest-02-shiddiq`). Hasil versi 1 (entri 2026-10-29 di bawah) tidak setara dan tidak lagi ada di `hasil/evaluasi.csv`.
 
@@ -40,7 +40,7 @@ Random Forest dijalankan ulang pada fondasi versi 2 (tiga skenario × target asl
 
 ---
 
-## [0.8.1] — 2026-11-16
+## [0.8.5] — 2026-11-16
 
 Linear Regression dijalankan ulang pada fondasi versi 2 (Ihsan).
 
@@ -63,6 +63,45 @@ Linear Regression dijalankan ulang pada fondasi versi 2 (Ihsan).
 - Target log tidak lagi meledak berkat `log_fitur()` (K-23): R² `dengan_lag` 0,7546, sama dengan uji template pada [0.8.0] (versi 1: −527,06).
 - Target asli tetap menghasilkan prediksi negatif (1.065 / 1.160 / 1.563). Prediksi itu dilaporkan apa adanya tanpa dipotong, sehingga RMSLE kosong.
 - Cara menjalankan: `python src/ambil_data_snpmb.py` bila `data/olahan/` belum ada, lalu *Restart & Run All*. Notebook ini dijalankan dengan `jupyter nbconvert --execute` pada Python 3.12.10, dengan 0 error.
+
+---
+
+## [0.8.4] — 2026-11-16
+
+- Memperbaiki identitas sidebar menjadi simbol buku terbuka, wordmark SNPMB Insight, dan kepanjangan Seleksi Nasional Penerimaan Mahasiswa Baru.
+- Mengganti tiga kartu berwarna menjadi satu baris statistik tanpa kotak, dengan pemisah tipis. Sidebar tetap hijau pinus.
+- Tampilan Beranda diperiksa di browser lokal; perubahan hanya pada presentasi, tanpa perubahan data atau model.
+
+---
+
+## [0.8.3] — 2026-11-16
+
+- Mengganti sidebar menjadi hijau pinus dengan aksen sage, menghapus ikon kotak S, dan memperbesar huruf S pada wordmark SNPMB.
+- Menyederhanakan Beranda menjadi filter jalur/tahun, ringkasan angka, tren, dan lima prodi dengan peminat terbanyak.
+- Mengganti radio SNBP/SNBT dengan tombol pilihan menyatu. Perbandingan memakai dua pasangan kampus–jurusan dan opsi jurusan ketiga; pilihan ganda yang sama ditolak dengan pesan.
+- Pemeriksaan: enam menu, tiga pasang pilihan, dan pilihan kosong lolos AppTest; Beranda serta perbandingan diperiksa di browser lokal. Model dan data evaluasi tidak diubah.
+
+---
+
+## [0.8.2] — 2026-11-16
+
+- Memeriksa Sharing: `Make this app public` sudah aktif. Permintaan dengan sesi cookie baru tanpa login berhasil HTTP 200 pada https://snpmb-insight.streamlit.app/ .
+- Merapikan sidebar navy, aksen biru/teal/amber, tombol utama, label kartu angka, panel grafik dan panduan. Warna grafik evaluasi membedakan model dan baseline.
+- Keenam menu lolos AppTest; Beranda diperiksa secara visual. Data dan hasil evaluasi model tetap menggunakan fondasi versi 2.
+- Deployment masih memakai fork Duha; pemindahan ke repo kelompok menunggu koordinasi Mikail.
+
+---
+
+## [0.8.1] — 2026-11-14
+
+- Menyiapkan fork `duhaalul/estimasi-peminat-snpmb` beserta branch `duha-fondasi-v2` untuk deployment mandiri; Cloud berhasil terbit dan diverifikasi di https://snpmb-insight.streamlit.app/ pada Python 3.13.
+- Menggabungkan fondasi versi 2 dari `main` ke branch Duha. Konflik `hasil/evaluasi.csv` diselesaikan dengan versi `main`; catatan changelog kedua branch digabung.
+- Mengganti nama notebook menjadi `notebooks/03_xgboost.ipynb`, menyalin ulang tiga sel `JANGAN DIUBAH` dari template versi 2, dan mengubah antarmuka menjadi `buat_model(target)`.
+- Menjalankan ulang XGBoost pada tiga skenario × dua target lewat `latih_dan_prediksi()` dan menyimpan enam baris `versi_fondasi = 2` melalui `evaluasi()`.
+- Menyesuaikan skrip validasi dan halaman Hasil Pengujian Streamlit untuk tiga skenario. Dashboard hanya menampilkan hasil dari versi fondasi terbaru.
+- Memperbarui `docs/HASIL_XGBOOST.md`, `docs/DASHBOARD_STREAMLIT.md`, dan status tugas. Deployment Streamlit Cloud masih memerlukan izin admin repo atau fork yang dimiliki akun Duha.
+
+---
 
 ## [0.8.0] — 2026-11-12
 
@@ -118,6 +157,17 @@ Hasil model Random Forest, penyetelan hyperparameter, dan feature importance pad
 
 ---
 
+## [Dashboard awal] — 2026-10-27
+
+- Menambahkan dashboard berbahasa sederhana dengan sidebar tombol berikon.
+- Menambahkan pencarian dan perbandingan jurusan, hasil evaluasi, serta panduan istilah.
+- Menyiapkan entry point `dashboard/streamlit_app.py`, dependensi khusus cloud, dan tema.
+- Startup memakai skrip resmi untuk membangun panel dari snapshot repo.
+- Enam menu lolos AppTest. Perkiraan baru belum diintegrasikan; deployment menunggu verifikasi layanan.
+- Petunjuk dan bukti tampilan tersedia di `docs/DASHBOARD_STREAMLIT.md`.
+
+---
+
 ## [0.7.1] — 2026-10-17
 
 Hasil model Linear Regression (Ihsan).
@@ -139,6 +189,25 @@ Hasil model Linear Regression (Ihsan).
 - Target log `dengan_lag` tidak stabil: `log1p(peminat)` dimodelkan linear terhadap `peminat_lag1` yang berskala asli, sehingga prodi dengan lag besar (lag-1 uji hingga 6.371, maksimum latih 4.570) mendapat prediksi eksponensial setelah `dari_log()` (maks 994.387; 54 prediksi > 3× maksimum target latih). Perbaikan, misalnya log pada fitur lag, mengubah fitur/algoritma sehingga **menunggu keputusan tim** dan belum diterapkan.
 - Cara menjalankan: bangun panel dengan `python src/ambil_data_snpmb.py` (folder `data/olahan/` tidak di-commit), lalu *Restart & Run All* pada notebook.
 
+---
+
+## [Duha — penomoran XGBoost] — 2026-10-15
+
+- Menggunakan `notebooks/04_xgboost.ipynb` sesuai permintaan Duha sebagai anggota keempat.
+- Menyesuaikan rujukan nama notebook pada skrip, dokumentasi hasil, panduan Duha, standar penamaan, dan pembagian tugas.
+- Memperbarui contoh nama pada markdown notebook salinan; kode fondasi, template bersama, dan sel kode terkunci tetap utuh.
+- Validasi dijalankan ulang tanpa melatih ulang atau mengubah hasil evaluasi.
+
+---
+
+## [Duha — XGBoost] — 2026-10-11
+
+- Menambahkan notebook XGBoost dengan empat eksperimen sesuai panduan, tanpa tuning pada data uji.
+- Menambahkan empat baris evaluasi melalui fondasi; hasil baseline dipertahankan.
+- Menambahkan cara menjalankan, dependensi XGBoost, pemeriksaan, dan catatan serah terima.
+- Memperbarui status XGBoost Duha; pekerjaan anggota lain dan tahap lain tidak diubah.
+- Model belum mengalahkan baseline lag-1. RMSLE target asli tidak tersedia karena prediksi negatif, sesuai fondasi.
+- Tidak mengubah data mentah, fondasi, atau template bersama.
 
 ---
 
@@ -157,6 +226,7 @@ Panduan kerja terpisah untuk setiap anggota kelompok.
 - README, panduan Claude, standar pengerjaan, dan pembagian tugas kini menautkan indeks tutorial anggota.
 
 ---
+
 ## [0.6.1] — 2026-09-25
 
 Penyelarasan pembagian tugas dan tata kelola dokumentasi kelompok.
@@ -171,6 +241,7 @@ Penyelarasan pembagian tugas dan tata kelola dokumentasi kelompok.
 - `STANDAR_PENGERJAAN.md` kini mensyaratkan artefak yang dapat diverifikasi, pelacakan berkas di luar repositori, serta pembaruan status dan bukti pekerjaan.
 
 ---
+
 ## [0.6.0] — 2026-09-25
 
 Fondasi pemodelan bersama dan baseline.
