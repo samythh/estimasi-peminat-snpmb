@@ -83,7 +83,7 @@ return XGBRegressor(
 
 ### Penyetelan hyperparameter
 
-Jika melakukan penyetelan, gunakan `lipatan_waktu(X_train)`. Parameter yang dapat diperiksa antara lain `n_estimators`, `learning_rate`, `max_depth`, `min_child_weight`, `subsample`, dan `colsample_bytree`.
+Jika melakukan penyetelan, gunakan `lipatan_waktu(X_train)`. Skrip di luar template (mis. `scripts/jalankan_xgboost.py`) wajib menilai model lewat `latih_dan_prediksi()`, bukan `fit` lalu `predict` langsung, agar skenario prodi baru dinilai tanpa prodi uji di data latih (K-24). Parameter yang dapat diperiksa antara lain `n_estimators`, `learning_rate`, `max_depth`, `min_child_weight`, `subsample`, dan `colsample_bytree`.
 
 Aturan:
 
@@ -95,7 +95,7 @@ Aturan:
 
 ### Pemeriksaan selesai
 
-- Skenario `dengan_lag` dan `tanpa_lag` tersedia.
+- Skenario `dengan_lag`, `tanpa_lag`, dan `tanpa_riwayat_sendiri` tersedia pada `versi_fondasi` terbaru.
 - Target asli dan log tersedia.
 - Konfigurasi final serta alasan pemilihan tercatat.
 - `random_state=42` digunakan.
@@ -114,8 +114,8 @@ BAB III harus menjelaskan implementasi yang benar-benar digunakan, bukan rencana
 4. **Fitur:** numerik, kategorik, biner, lag, pengelompokan bidang, serta fitur yang dilarang.
 5. **Pembagian data:** latih 2021–2024 dan uji 2025.
 6. **Algoritma:** baseline, Linear Regression, Random Forest, dan XGBoost beserta konfigurasi final.
-7. **Skenario eksperimen:** dengan/tanpa lag dan target asli/log.
-8. **Validasi:** expanding window melalui `lipatan_waktu()`.
+7. **Skenario eksperimen:** dengan lag, tanpa lag, tanpa riwayat sendiri, dan target asli/log.
+8. **Validasi:** expanding window melalui `lipatan_waktu()`, ditambah lipatan kelompok prodi untuk skenario prodi baru (K-24).
 9. **Evaluasi:** MAE, MAPE, R², RMSLE, termasuk perlakuan target nol pada MAPE.
 10. **Implementasi aplikasi:** alur eksplorasi dan, setelah terintegrasi, alur estimasi.
 
