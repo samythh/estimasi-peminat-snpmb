@@ -20,3 +20,9 @@
 2026-11-16T11:22:06,linear_regression,tanpa_lag,gabungan,log,32959,9799,71,204.78,94.66,0,0.4239,0.8073,0,,2
 2026-11-16T11:22:07,linear_regression,tanpa_riwayat_sendiri,gabungan,asli,22453,8834,73,209.32,436.58,0,0.5561,,1563,,2
 2026-11-16T11:22:07,linear_regression,tanpa_riwayat_sendiri,gabungan,log,22453,8834,73,163.33,64.19,0,0.5995,0.6726,0,,2
+2026-11-16T11:27:53,random_forest,dengan_lag,gabungan,asli,21507,8508,76,68.06,27.26,0,0.9294,0.3385,0,,2
+2026-11-16T11:28:01,random_forest,dengan_lag,gabungan,log,21507,8508,76,72.74,24.25,0,0.905,0.3505,0,,2
+2026-11-16T11:28:25,random_forest,tanpa_lag,gabungan,asli,32959,9799,71,185.16,149.75,0,0.6067,0.8482,0,,2
+2026-11-16T11:28:50,random_forest,tanpa_lag,gabungan,log,32959,9799,71,178.92,79.5,0,0.555,0.7469,0,,2
+2026-11-16T11:29:13,random_forest,tanpa_riwayat_sendiri,gabungan,asli,22453,8834,73,146.61,135.75,0,0.6778,0.7663,0,,2
+2026-11-16T11:29:36,random_forest,tanpa_riwayat_sendiri,gabungan,log,22453,8834,73,143.41,59.26,0,0.6293,0.6208,0,,2
