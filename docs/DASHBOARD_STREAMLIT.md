@@ -39,3 +39,9 @@ Status dokumen ini: fork tersedia di https://github.com/duhaalul/estimasi-pemina
 ## Batas versi awal
 
 Prediksi baru, model anggota lain, serta rentang prediksi belum diintegrasikan. Uji perangkat seluler dan build Linux cloud masih perlu verifikasi pada deployment. Aplikasi bukan situs resmi SNPMB dan tidak menghitung peluang lolos pribadi.
+
+## Akses publik dan tampilan (2026-11-16)
+
+Bagikan https://snpmb-insight.streamlit.app/ kepada dosen. Opsi `Make this app public` sudah aktif saat pemeriksaan; permintaan sesi baru tanpa kredensial kembali ke alamat aplikasi dengan HTTP 200.
+
+Sidebar navy memakai aksen biru dan teal; kartu ringkasan memakai biru, teal, dan amber. Tombol diperlebar agar label tidak terpotong. Keenam menu lolos AppTest dan susunan Beranda sudah diperiksa visual. Pemindahan deployment ke repo kelompok dilakukan setelah koordinasi dengan Mikail.

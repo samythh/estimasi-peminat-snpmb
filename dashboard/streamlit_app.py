@@ -91,8 +91,8 @@ def pilih_jalur(kunci: str) -> str:
 
 
 def beranda(data: pd.DataFrame) -> None:
-    st.html('<div class="hero"><span class="eyebrow">LANGKAH AWAL MEMILIH KULIAH</span><h1>Kenali jurusan.<br>Pahami peminatnya.</h1><p>Lihat riwayat peminat dan daya tampung kampus pilihanmu.<br>Mulai dengan mencari jurusan, lalu bandingkan pilihanmu.</p><span class="hero-chip">SNBP & SNBT</span><span class="hero-chip">Data 2021–2025</span></div>')
-    a, b, _ = st.columns([1.15, 1.15, 2])
+    st.html('<div class="hero"><span class="eyebrow">LANGKAH AWAL MEMILIH KULIAH</span><h1>Kenali jurusan.<br><span>Pahami peminatnya.</span></h1><p>Lihat riwayat peminat dan daya tampung kampus pilihanmu.<br>Mulai dengan mencari jurusan, lalu bandingkan pilihanmu.</p><span class="hero-chip">SNBP & SNBT</span><span class="hero-chip teal">Data 2021–2025</span><span class="hero-chip amber">Eksplorasi pilihan kuliah</span></div>')
+    a, b = st.columns(2)
     with a: tombol("Cari jurusan", "Cari Jurusan", "hero_cari")
     with b: tombol("Bandingkan pilihan", "Bandingkan Jurusan", "hero_banding")
     st.write("")
@@ -107,12 +107,13 @@ def beranda(data: pd.DataFrame) -> None:
     if tahun_data.empty:
         st.info("Belum ada data untuk tahun dan jalur ini. Coba pilihan lain.")
         return
-    kolom = st.columns(3)
+    with st.container(key="ringkasan_angka"):
+        kolom = st.columns(3)
     for col, label, nilai, bantuan in zip(kolom, ["Kampus dalam data", "Jurusan yang tercatat", "Rata-rata peminat per jurusan"], [tahun_data.id_ptn.nunique(), tahun_data.id_prodi.nunique(), tahun_data.peminat.mean()], ["Perguruan tinggi dengan riwayat peminat tersedia.", "Program studi dengan riwayat peminat tersedia.", "Rata-rata antarjurusan, bukan jumlah pendaftar unik. Jurusan populer dapat menaikkan angka ini."]):
         col.metric(label, angka(nilai), help=bantuan)
     st.write("")
     a, b = st.columns([1.65, 1])
-    with a, st.container(border=True):
+    with a, st.container(key="tren_beranda"):
         st.subheader("Bagaimana peminat berubah?")
         st.caption(f"Rata-rata peminat per jurusan melalui {jalur}")
         tren = data[data.jalur.eq(jalur)].groupby("tahun", as_index=False).peminat.mean()
@@ -123,9 +124,9 @@ def beranda(data: pd.DataFrame) -> None:
         ).properties(height=230)
         st.altair_chart(grafik, width="stretch")
         st.caption("Jumlah jurusan yang tersedia dapat berbeda setiap tahun. Grafik ini bukan prediksi tahun berikutnya.")
-    with b, st.container(border=True):
-        st.subheader("Baca data dalam 3 langkah")
-        st.markdown("**01 · Pilih jalur masuk**  \nLihat SNBP atau SNBT secara terpisah.\n\n**02 · Temukan jurusan**  \nPilih kampus dan jurusan yang ingin kamu kenali.\n\n**03 · Bandingkan riwayatnya**  \nPerhatikan perubahan peminat dan jumlah kursi.")
+    with b, st.container(key="panduan_beranda"):
+        st.subheader("Mulai dari sini")
+        st.html('<div class="step"><span class="step-num">01</span><div><b>Pilih jalur masuk</b><p>Lihat SNBP atau SNBT secara terpisah.</p></div></div><div class="step"><span class="step-num">02</span><div><b>Temukan jurusan</b><p>Cari kampus dan jurusan yang kamu minati.</p></div></div><div class="step"><span class="step-num">03</span><div><b>Bandingkan riwayatnya</b><p>Perhatikan perubahan peminat dan jumlah kursi.</p></div></div>')
         tombol("Pelajari cara membaca data", "Panduan", "bantuan_beranda")
     st.caption("Banyak peminat tidak berarti peluang lolosmu dapat dihitung dari angka ini. Gunakan data sebagai bahan pertimbangan, bukan kepastian diterima.")
 
@@ -222,9 +223,10 @@ def pengujian() -> None:
              "xgboost": "XGBoost", "linear_regression": "Regresi linear",
              "random_forest": "Random Forest"}
     hasil["Metode"] = hasil.nama_model.map(model).fillna(hasil.nama_model)
-    hasil["Metode"] += hasil.apply(lambda r: (" · data asli" if r.target == "asli" else " · data diubah ke skala log") if r.nama_model == "xgboost" else "", axis=1)
+    hasil["Metode"] += hasil.apply(lambda r: (" · target asli" if r.target == "asli" else " · target log") if not r.nama_model.startswith("baseline_") else "", axis=1)
+    hasil["Warna"] = hasil.nama_model.map({"baseline_lag1": "#d39726", "baseline_rata_kelompok": "#8b9db0", "baseline_rata_sejenis": "#b47e20", "xgboost": "#0d9488", "linear_regression": "#2563eb", "random_forest": "#7c3aed"}).fillna("#56738d")
     st.info("Lihat besar selisihnya: makin kecil angkanya, makin dekat perkiraan dengan data nyata. Contoh: selisih rata-rata 100 berarti perkiraan meleset sekitar 100 orang per jurusan.", icon=":material/lightbulb:")
-    st.altair_chart(alt.Chart(hasil).mark_bar(color="#2563eb", cornerRadiusEnd=5).encode(x=alt.X("MAE:Q", title="Selisih rata-rata (orang)", scale=alt.Scale(zero=True)), y=alt.Y("Metode:N", title=None, sort="x"), tooltip=["Metode", alt.Tooltip("MAE:Q", title="Selisih rata-rata", format=".2f")]).properties(height=max(240, 34 * len(hasil))), width="stretch")
+    st.altair_chart(alt.Chart(hasil).mark_bar(cornerRadiusEnd=5).encode(color=alt.Color("Warna:N", scale=None, legend=None), x=alt.X("MAE:Q", title="Selisih rata-rata (orang)", scale=alt.Scale(zero=True)), y=alt.Y("Metode:N", title=None, sort="x"), tooltip=["Metode", alt.Tooltip("MAE:Q", title="Selisih rata-rata", format=".2f")]).properties(height=max(240, 34 * len(hasil))), width="stretch")
     patokan_model = {"dengan_lag": "baseline_lag1", "tanpa_riwayat_sendiri": "baseline_rata_sejenis",
                      "tanpa_lag": "baseline_rata_kelompok"}[skenario]
     if {"xgboost", patokan_model}.issubset(set(hasil.nama_model)):

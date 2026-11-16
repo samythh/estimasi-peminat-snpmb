@@ -6,6 +6,15 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Duha — perapian dashboard dan akses publik] — 2026-11-16
+
+- Memeriksa Sharing: `Make this app public` sudah aktif. Permintaan dengan sesi cookie baru tanpa login berhasil HTTP 200 pada https://snpmb-insight.streamlit.app/ .
+- Merapikan sidebar navy, aksen biru/teal/amber, tombol utama, label kartu angka, panel grafik dan panduan. Warna grafik evaluasi membedakan model dan baseline.
+- Keenam menu lolos AppTest; Beranda diperiksa secara visual. Data dan hasil evaluasi model tetap menggunakan fondasi versi 2.
+- Deployment masih memakai fork Duha; pemindahan ke repo kelompok menunggu koordinasi Mikail.
+
+---
+
 ## [Duha — XGBoost dan dashboard fondasi 2] — 2026-11-14
 
 - Menyiapkan fork `duhaalul/estimasi-peminat-snpmb` beserta branch `duha-fondasi-v2` untuk deployment mandiri; Cloud berhasil terbit dan diverifikasi di https://snpmb-insight.streamlit.app/ pada Python 3.13.
