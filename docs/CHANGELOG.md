@@ -6,6 +6,40 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Shiddiq — Random Forest, fondasi versi 2] — 2026-11-16
+
+Random Forest dijalankan ulang pada fondasi versi 2 (tiga skenario × target asli/log), disetel ulang, dilengkapi feature importance dan rentang prediksi prodi baru (branch `random-forest-02-shiddiq`). Hasil versi 1 (entri 2026-10-29 di bawah) tidak setara dan tidak lagi ada di `hasil/evaluasi.csv`.
+
+### Ditambahkan
+- `notebooks/02_random_forest.ipynb` dibangun ulang dari template versi 2: `buat_model(target)` untuk Random Forest; sel *JANGAN DIUBAH* tidak disentuh (identik dengan template). Sel penyetelan, feature importance, dan rentang prediksi berada di luar sel terkunci.
+- `hasil/tuning_random_forest.csv`: skor validasi 24 kandidat × 6 kombinasi dengan `lipatan_waktu()` (lipatan kelompok pada skenario prodi baru, K-24), 100 pohon saat pencarian. Satu konfigurasi bersama dipilih lewat rata-rata peringkat MAE (aturan ditetapkan sebelum melihat hasil): `max_depth=None`, `min_samples_leaf=2`, `max_features=0.33`, model akhir `n_estimators=300`. Peringkat rata-rata 3,5 vs bawaan 15,7; MAE validasi rata-rata 140,4 vs 144,2. Hasil sementara disimpan per kandidat agar penyetelan dapat dilanjutkan.
+- `hasil/grafik/importance_random_forest_2021_2024.csv` dan `.png`: impurity dan permutasi grup pada lipatan validasi waktu untuk tiga skenario × dua target. Grafik utama memakai target log, dipilih dari skor validasi penyetelan.
+- `hasil/rentang_prediksi_random_forest_cakupan_2024.csv` dan `..._contoh_2024.csv`: rentang empiris antarpohon (persentil ke-10 dan ke-90, dikembalikan ke skala orang sebelum persentil), cakupan pada validasi 2024, dan contoh baris validasi ([K-25](KEPUTUSAN_METODOLOGI.md#k-25)).
+- Enam baris `random_forest` di `hasil/evaluasi.csv` (`versi_fondasi = 2`, jalur gabungan, uji 2025, tanpa prediksi negatif):
+
+  | skenario | target | MAE | MAPE | R² | RMSLE |
+  |---|---|---|---|---|---|
+  | dengan_lag | asli | 68,06 | 27,26 | 0,9294 | 0,3385 |
+  | dengan_lag | log | 72,74 | 24,25 | 0,9050 | 0,3505 |
+  | tanpa_riwayat_sendiri | asli | 146,61 | 135,75 | 0,6778 | 0,7663 |
+  | tanpa_riwayat_sendiri | log | 143,41 | 59,26 | 0,6293 | 0,6208 |
+  | tanpa_lag | asli | 185,16 | 149,75 | 0,6067 | 0,8482 |
+  | tanpa_lag | log | 178,92 | 79,50 | 0,5550 | 0,7469 |
+
+### Diubah
+- `hasil/evaluasi.csv`: konflik penggabungan dengan `main` diselesaikan dengan versi `main`; empat baris Random Forest versi 1 dihapus dari berkas (tetap ada di commit `14d44cc`).
+- Entri Random Forest 2026-10-29 diberi label "fondasi versi 1".
+
+### Catatan untuk tim
+- `dengan_lag`: Random Forest belum mengalahkan `baseline_lag1` (MAE 66,11; MAPE 23,65; R² 0,9480). Selisih MAE 2,95 (sekitar 3%), tetapi RMSLE Random Forest lebih rendah (0,3385 vs 0,3633). Pada versi 2 target asli lebih baik daripada log, kebalikan versi 1. Satu tahun uji, tanpa uji signifikansi.
+- Skenario prodi baru: Random Forest jauh di bawah baseline pembandingnya (`tanpa_riwayat_sendiri` 143,41 vs 254,52; `tanpa_lag` 178,92 vs 299,57). Skor `tanpa_lag` lebih tinggi dari versi 1 (151,29) karena penilaian kini menyembunyikan prodi uji (K-24), bukan karena model memburuk.
+- Rentang prediksi terlalu sempit: cakupan validasi 2024 hanya 72,6% (`tanpa_riwayat_sendiri`) dan 57,0% (`tanpa_lag`) dari 80% nominal. Tidak dikalibrasi ulang; harus disebut "rentang empiris antarpohon" dan tidak boleh disebut interval kepercayaan.
+- Feature importance (target log, permutasi): `dengan_lag` didominasi `peminat_lag1` (kenaikan MAE ±196 orang), lalu fitur prodi sejenis (±59 dan ±43); `tanpa_riwayat_sendiri` didominasi `rata_peminat_prodi_sejenis_lag1` (±135); `tanpa_lag` paling bergantung pada `daya_tampung` (±71) dan `kelompok_bidang` (±55). Importance bukan bukti sebab-akibat; keterbatasannya tertulis di notebook.
+- Cara menjalankan: bangun panel dengan `python src/ambil_data_snpmb.py`, lalu *Restart & Run All* dari dalam folder repo (±35 menit di mesin dua core). Penyetelan, importance, dan rentang memakai berkas CSV tersimpan bila ada; atur `ULANG_TUNING` / `ULANG_IMPORTANCE` ke `True` untuk menghitung ulang. CSV versi lain ditolak lewat pemeriksaan `versi_fondasi`.
+- Belum ada: contoh prodi baru dengan masukan kustom, menunggu fungsi masukan prodi baru dari Mikail agar melewati transformasi yang sama dengan data latih.
+
+---
+
 ## [0.8.0] — 2026-11-12
 
 Fondasi versi 2: fitur prodi sejenis, skenario ketiga, dan penanda vokasi SNBT. **Semua model wajib dijalankan ulang**; hasil versi 1 tidak setara dengan versi 2.

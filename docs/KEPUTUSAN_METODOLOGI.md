@@ -223,6 +223,13 @@ Random Forest `dengan_lag` dengan dan tanpa `log_fitur()`: MAE 71,97 dan 71,98, 
 **Konsekuensi:** waktu latih dua skenario ini sekitar lima kali lipat. Model akhir untuk aplikasi tetap dilatih pada seluruh data latih; lipatan kelompok hanya untuk penilaian dan penyetelan.
 *Ditolak:* pembagian waktu saja (skor terlalu optimistis 20–29%); menyisihkan satu kelompok 20% tetap (baris uji berkurang menjadi seperlima).
 
+### K-25 · Rentang prediksi prodi baru: persentil antarpohon
+**Keputusan:** Untuk Random Forest bertarget log, setiap pohon memberi satu prediksi pada skala log; prediksi tiap pohon dikembalikan ke skala orang dengan `dari_log()` lebih dulu, baru persentil ke-10 dan ke-90 dihitung. Titik prediksi tetap prediksi model biasa (`dari_log` dari rata-rata log seluruh pohon). Rentang ini disebut **rentang empiris antarpohon**, bukan confidence interval atau prediction interval. Skenario: `tanpa_riwayat_sendiri` bila prodi punya prodi sejenis di PTN lain pada tahun sebelumnya, `tanpa_lag` bila tidak (K-20).
+**Validasi:** cakupan (persen nilai aktual di dalam rentang) diukur pada validasi 2024 lewat `lipatan_waktu()`, sehingga prodi yang divalidasi tidak ikut dilatih (K-24). Data uji 2025 tidak dipakai dan rentang tidak dikalibrasi ulang.
+**Hasil (fondasi versi 2):** cakupan 72,6% (`tanpa_riwayat_sendiri`, n = 8.487) dan 57,0% (`tanpa_lag`, n = 9.442), di bawah 80% nominal. Rentang cenderung terlalu sempit karena pohon dilatih pada data yang sama; ia hanya menunjukkan sebaran prediksi antarpohon.
+**Keterbatasan:** satu tahun validasi, dan lonjakan vokasi SNBT 2024 (K-19) dapat memengaruhi hasil. Masukan prodi baru kustom belum ada; menunggu fungsi masukan yang melewati transformasi fondasi yang sama dengan data latih.
+*Ditolak:* menyebut rentang ini confidence interval formal; kalibrasi lebar rentang memakai data uji 2025.
+
 ---
 
 ## Hal yang masih terbuka
