@@ -230,6 +230,30 @@ Random Forest `dengan_lag` dengan dan tanpa `log_fitur()`: MAE 71,97 dan 71,98, 
 **Keterbatasan:** satu tahun validasi, dan lonjakan vokasi SNBT 2024 (K-19) dapat memengaruhi hasil. Masukan prodi baru kustom belum ada; menunggu fungsi masukan yang melewati transformasi fondasi yang sama dengan data latih.
 *Ditolak:* menyebut rentang ini confidence interval formal; kalibrasi lebar rentang memakai data uji 2025.
 
+### K-26 · Pemilihan model sementara per skenario
+**Aturan** (ditetapkan sebelum melihat hasil, `scripts/bandingkan_model.py`):
+1. Pemilihan memakai skor **validasi** dari `lipatan_waktu()` pada data latih 2021–2024, bukan data uji 2025 (K-06). Konfigurasi setiap model sama dengan notebook pemiliknya.
+2. Konfigurasi yang menghasilkan prediksi negatif di validasi gugur, karena jumlah peminat tidak mungkin negatif.
+3. Dari sisanya, MAE validasi terkecil dipilih.
+4. Bila model terpilih tidak lebih baik dari baseline terkuat di skenario itu, baseline yang dipakai.
+
+**Hasil** (gabungan; `hasil/validasi_perbandingan_model.csv`, `hasil/perbandingan_model.csv`):
+
+| Skenario | Terpilih | MAE validasi | Runner-up | Baseline (MAE validasi) | MAE uji 2025 |
+|---|---|---|---|---|---|
+| `dengan_lag` | `baseline_lag1` | 85,86 | Random Forest log, 87,69 | — | 66,11 |
+| `tanpa_lag` | Random Forest, target log | 180,56 | XGBoost log, 180,66 | rata-rata kelompok, 284,66 | 178,92 |
+| `tanpa_riwayat_sendiri` | XGBoost, target log | 130,02 | Random Forest log, 139,90 | rata-rata prodi sejenis, 236,79 | 129,35 |
+
+**Tafsiran:**
+- Untuk prodi yang punya riwayat, belum ada model yang lebih akurat daripada "peminat sama dengan tahun lalu". Ini dilaporkan apa adanya, bukan disembunyikan; prodi dengan riwayat memakai lag-1 sebagai estimasi.
+- Untuk prodi baru, model jauh lebih baik daripada baseline: galat turun 37% (`tanpa_lag`) dan 45% (`tanpa_riwayat_sendiri`). Di sinilah model memberi nilai tambah.
+- Pada `tanpa_lag`, Random Forest dan XGBoost praktis seri (selisih MAE validasi 0,1). Pada data uji 2025 XGBoost lebih baik (171,16 vs 178,92), tetapi data uji tidak dipakai untuk memilih; keduanya layak dan pilihan ini dapat ditinjau bila validasi ditambah.
+- Semua konfigurasi target asli dari Linear Regression dan XGBoost menghasilkan prediksi negatif di validasi. Target log menjadi pilihan di kedua skenario prodi baru.
+
+**Status:** sementara. Pemilihan akhir ditinjau setelah integrasi Streamlit dan bila ada model atau fitur baru; aturan di atas tetap berlaku.
+*Ditolak:* memilih berdasarkan MAE uji 2025 (data uji menjadi bagian dari pemilihan, sehingga skor akhirnya tidak lagi independen).
+
 ---
 
 ## Hal yang masih terbuka

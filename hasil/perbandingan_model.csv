@@ -1,0 +1,4 @@
+﻿skenario,nama_model,target,MAE_validasi,model_terbaik,MAE_validasi_model_terbaik,MAE_validasi_baseline,alasan,MAE_uji_2025,MAPE_uji_2025,R2_uji_2025,RMSLE_uji_2025
+dengan_lag,baseline_lag1,asli,85.8587,random_forest (log),87.6943,85.8587,tidak ada model yang lebih baik dari baseline,66.11,23.65,0.948,0.3633
+tanpa_lag,random_forest,log,180.56,random_forest (log),180.56,284.6572,MAE validasi terkecil dan lebih baik dari baseline,178.92,79.5,0.555,0.7469
+tanpa_riwayat_sendiri,xgboost,log,130.0183,xgboost (log),130.0183,236.7936,MAE validasi terkecil dan lebih baik dari baseline,129.35,49.78,0.719,0.5763

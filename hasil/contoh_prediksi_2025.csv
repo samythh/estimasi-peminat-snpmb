@@ -1,0 +1,46 @@
+﻿skenario,ptn_nama,prodi,jenjang,jalur,aktual_2025,prediksi_model,model,prediksi_baseline,galat_model,contoh
+dengan_lag,UNIVERSITAS ANDALAS,AGROTEKNOLOGI,S1,SNBP,418,240,random_forest (log),259,-178,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,KEDOKTERAN,S1,SNBP,1070,1060,random_forest (log),1081,-10,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,SISTEM INFORMASI,S1,SNBP,570,594,random_forest (log),605,24,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,HUKUM,S1,SNBP,885,1143,random_forest (log),1096,258,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,MANAJEMEN,S1,SNBP,702,982,random_forest (log),962,280,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,AGROTEKNOLOGI,S1,SNBT,625,343,random_forest (log),390,-282,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,KEDOKTERAN,S1,SNBT,2074,2118,random_forest (log),2164,44,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,SISTEM INFORMASI,S1,SNBT,989,1145,random_forest (log),1170,156,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,HUKUM,S1,SNBT,2248,2179,random_forest (log),2175,-69,Unand (ilustrasi)
+dengan_lag,UNIVERSITAS ANDALAS,MANAJEMEN,S1,SNBT,1329,1754,random_forest (log),1746,425,Unand (ilustrasi)
+dengan_lag,UIN RADEN MAS SAID SURAKARTA,TEKNOLOGI PANGAN,S1,SNBT,128,101,random_forest (log),101,-27,acak nasional
+dengan_lag,UNIVERSITAS INDONESIA,ILMU PSIKOLOGI,S1,SNBP,1307,1341,random_forest (log),1274,34,acak nasional
+dengan_lag,UNIVERSITAS JENDERAL SOEDIRMAN,PENDIDIKAN DOKTER,S1,SNBP,918,1052,random_forest (log),1014,134,acak nasional
+dengan_lag,UNIVERSITAS HASANUDDIN,TEKNIK PERKAPALAN ,S1,SNBT,334,339,random_forest (log),310,5,acak nasional
+dengan_lag,POLITEKNIK NEGERI BALI,USAHA PERJALANAN WISATA,D3,SNBT,249,277,random_forest (log),228,28,acak nasional
+tanpa_lag,UNIVERSITAS ANDALAS,AGROTEKNOLOGI,S1,SNBP,418,293,random_forest (log),,-125,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,KEDOKTERAN,S1,SNBP,1070,1016,random_forest (log),,-54,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,SISTEM INFORMASI,S1,SNBP,570,335,random_forest (log),,-235,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,HUKUM,S1,SNBP,885,1315,random_forest (log),,430,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,MANAJEMEN,S1,SNBP,702,815,random_forest (log),,113,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,AGROTEKNOLOGI,S1,SNBT,625,509,random_forest (log),,-116,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,KEDOKTERAN,S1,SNBT,2074,1894,random_forest (log),,-180,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,SISTEM INFORMASI,S1,SNBT,989,606,random_forest (log),,-383,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,HUKUM,S1,SNBT,2248,2180,random_forest (log),,-68,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS ANDALAS,MANAJEMEN,S1,SNBT,1329,1230,random_forest (log),,-99,Unand (ilustrasi)
+tanpa_lag,UNIVERSITAS NEGERI MAKASSAR,GEOGRAFI,S1,SNBT,91,58,random_forest (log),,-33,acak nasional
+tanpa_lag,UNIVERSITAS NEGERI YOGYAKARTA,PENDIDIKAN AKUNTANSI,S1,SNBT,315,350,random_forest (log),,35,acak nasional
+tanpa_lag,UNIVERSITAS KHAIRUN,AGROTEKNOLOGI,S1,SNBP,9,8,random_forest (log),,-1,acak nasional
+tanpa_lag,UIN JAKARTA,PENDIDIKAN MATEMATIKA,S1,SNBT,110,197,random_forest (log),,87,acak nasional
+tanpa_lag,UNIVERSITAS DIPONEGORO,TEKNOLOGI REKAYASA KIMIA INDUSTRI ,D4,SNBT,1526,678,random_forest (log),,-848,acak nasional
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,AGROTEKNOLOGI,S1,SNBP,418,356,xgboost (log),200,-62,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,KEDOKTERAN,S1,SNBP,1070,1102,xgboost (log),865,32,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,SISTEM INFORMASI,S1,SNBP,570,562,xgboost (log),415,-8,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,HUKUM,S1,SNBP,885,1087,xgboost (log),721,202,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,MANAJEMEN,S1,SNBP,702,1389,xgboost (log),1134,687,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,AGROTEKNOLOGI,S1,SNBT,625,368,xgboost (log),218,-257,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,KEDOKTERAN,S1,SNBT,2074,2423,xgboost (log),1445,349,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,SISTEM INFORMASI,S1,SNBT,989,790,xgboost (log),528,-199,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,HUKUM,S1,SNBT,2248,1829,xgboost (log),1090,-419,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS ANDALAS,MANAJEMEN,S1,SNBT,1329,1941,xgboost (log),1243,612,Unand (ilustrasi)
+tanpa_riwayat_sendiri,UNIVERSITAS JENDERAL SOEDIRMAN,KIMIA,S1,SNBT,298,248,xgboost (log),118,-50,acak nasional
+tanpa_riwayat_sendiri,UNIVERSITAS NEGERI SEMARANG,PENDIDIKAN BAHASA MANDARIN,S1,SNBP,134,62,xgboost (log),93,-72,acak nasional
+tanpa_riwayat_sendiri,UNIVERSITAS DIPONEGORO,BIOTEKNOLOGI,S1,SNBP,502,228,xgboost (log),112,-274,acak nasional
+tanpa_riwayat_sendiri,INSTITUT TEKNOLOGI SEPULUH NOPEMBER,KIMIA,S1,SNBT,383,215,xgboost (log),117,-168,acak nasional
+tanpa_riwayat_sendiri,UNIVERSITAS SRIWIJAYA,ADMINISTRASI PUBLIK,S1,SNBP,1081,733,xgboost (log),477,-348,acak nasional

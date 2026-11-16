@@ -8,7 +8,7 @@ Sebelum mengerjakan tugas, setiap anggota membaca:
 
 1. [PEMBAGIAN_TUGAS.md](PEMBAGIAN_TUGAS.md) — memastikan tugas, dependensi, status, dan keluaran.
 2. [STANDAR_PENGERJAAN.md](STANDAR_PENGERJAAN.md) — memahami aturan data, kode, evaluasi, dan dokumentasi.
-3. [KEPUTUSAN_METODOLOGI.md](KEPUTUSAN_METODOLOGI.md) — memahami keputusan K-01–K-18 dan alasannya.
+3. [KEPUTUSAN_METODOLOGI.md](KEPUTUSAN_METODOLOGI.md) — memahami keputusan K-01–K-26 dan alasannya.
 4. [KAMUS_DATA.md](KAMUS_DATA.md) — memahami arti kolom dan fitur yang dilarang.
 5. Panduan pribadi di bawah ini.
 

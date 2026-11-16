@@ -9,7 +9,7 @@ Ihsan mengerjakan BAB I, BAB II, verifikasi daftar pustaka, model Linear Regress
 ### Sumber yang harus dibaca
 
 - Judul dan ruang lingkup di `README.md`.
-- Keputusan K-01–K-18 di `docs/KEPUTUSAN_METODOLOGI.md`.
+- Keputusan K-01–K-26 di `docs/KEPUTUSAN_METODOLOGI.md`.
 - Definisi data di `docs/KAMUS_DATA.md`.
 - Grafik/deskripsi yang sudah tersedia di `analisis/` dan `hasil/grafik/`.
 - PPT dan daftar pustaka kelompok di folder bersama setelah tautannya dicantumkan.

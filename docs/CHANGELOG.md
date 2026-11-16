@@ -6,6 +6,22 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [0.9.0] — 2026-11-16
+
+Penggabungan hasil ketiga model dan pemilihan model sementara.
+
+### Ditambahkan
+- Cabang `linear-regression-01-ihsan`, `random-forest-02-shiddiq`, dan `duha-fondasi-v2` digabung ke `main`. `hasil/evaluasi.csv` berisi 33 baris `versi_fondasi = 2`: 15 baseline dan 6 baris untuk setiap model.
+- `scripts/bandingkan_model.py`: skor validasi `lipatan_waktu()` ketiga model dan baseline dengan konfigurasi final masing-masing, lalu pemilihan model per skenario ([K-26](KEPUTUSAN_METODOLOGI.md#k-26)). Keluaran: `hasil/validasi_perbandingan_model.csv` dan `hasil/perbandingan_model.csv`.
+- `scripts/contoh_prediksi.py`: contoh prediksi vs aktual 2025 untuk prodi Unand (ilustrasi) dan sampel acak nasional, di `hasil/contoh_prediksi_2025.csv`.
+- K-26: model sementara adalah `baseline_lag1` untuk `dengan_lag` (belum ada model yang lebih baik di validasi), Random Forest log untuk `tanpa_lag`, dan XGBoost log untuk `tanpa_riwayat_sendiri`.
+
+### Diperbaiki
+- Sel pertama template dan `00_baseline.ipynb` tidak lagi berputar tanpa akhir bila notebook dibuka dari luar folder repo; kini berhenti dengan pesan yang jelas (dilaporkan Shiddiq di [0.7.2]). Notebook anggota yang sudah berjalan di dalam repo tidak perlu diubah.
+- Entri CHANGELOG dari ketiga cabang diberi nomor versi dan diurutkan menurut tanggal.
+
+---
+
 ## [0.8.6] — 2026-11-16
 
 Random Forest dijalankan ulang pada fondasi versi 2 (tiga skenario × target asli/log), disetel ulang, dilengkapi feature importance dan rentang prediksi prodi baru (branch `random-forest-02-shiddiq`). Hasil versi 1 (entri 2026-10-29 di bawah) tidak setara dan tidak lagi ada di `hasil/evaluasi.csv`.

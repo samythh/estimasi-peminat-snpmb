@@ -98,6 +98,11 @@ Fitur struktural: `daya_tampung`, `jumlah_prodi_ptn`, enam fitur biner PTN/prodi
 |---|---|
 | `evaluasi.csv` | Satu baris per model × skenario × jalur × target. Kolom `versi_fondasi` membedakan versi fondasi; baris tanpa versi berasal dari versi 1 dan tidak setara dengan versi 2 (K-22) |
 | `analisis_penanda_rezim.csv` | Pengaruh penanda vokasi SNBT pada baseline, data uji SNBT 2025 (K-19) |
+| `validasi_perbandingan_model.csv` | MAE, R², RMSLE, dan jumlah prediksi negatif setiap model × target dan baseline pada lipatan validasi `lipatan_waktu()` (K-26) |
+| `perbandingan_model.csv` | Konfigurasi terpilih per skenario, alasannya, dan skor uji 2025-nya (K-26) |
+| `contoh_prediksi_2025.csv` | Contoh prediksi vs aktual 2025 per skenario: prodi Unand (ilustrasi) dan sampel acak nasional |
+| `tuning_random_forest.csv`, `grafik/importance_random_forest_2021_2024.*`, `rentang_prediksi_random_forest_*.csv` | Penyetelan, feature importance, dan rentang prediksi Random Forest (Shiddiq, K-25) |
+| `hasil_validasi_xgboost.json` | Hasil `scripts/validasi_xgboost.py` (Duha) |
 
 ---
 

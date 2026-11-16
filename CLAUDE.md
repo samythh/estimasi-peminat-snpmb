@@ -18,7 +18,7 @@ Panduan untuk Claude Code. Detail lengkap ada di `docs/`; berkas ini memuat hal 
 | `docs/PEMBAGIAN_TUGAS.md` | Sebelum mengambil tugas; cek pemilik, status, dependensi, dan keluaran wajib |
 | `docs/PANDUAN_ANGGOTA.md` | Sebelum mengerjakan tugas anggota; ikuti panduan pribadi dan daftar pemeriksaannya |
 | `docs/KAMUS_DATA.md` | Memilih fitur; kolom *Status fitur* menentukan yang boleh dan dilarang |
-| `docs/KEPUTUSAN_METODOLOGI.md` | Sebelum mengubah keputusan metodologis K-01–K-18 |
+| `docs/KEPUTUSAN_METODOLOGI.md` | Sebelum mengubah keputusan metodologis K-01–K-26 |
 | `docs/CHANGELOG.md` | Setiap perubahan penting pada data, kode, model, hasil, dokumen, presentasi, tugas, atau jalur **wajib** dicatat di sini |
 
 ## Aturan dokumentasi dan batas tugas
@@ -34,11 +34,13 @@ Panduan untuk Claude Code. Detail lengkap ada di `docs/`; berkas ini memuat hal 
 ```
 src/             ambil_data_snpmb.py, fitur_kelompok_bidang.py, fitur_prodi_sejenis.py, fondasi.py
 analisis/        analisis & grafik contoh Unand
-notebooks/       00_baseline.ipynb, template_model.ipynb
+notebooks/       00_baseline.ipynb, template_model.ipynb, 01_linear_regression, 02_random_forest, 03_xgboost
+scripts/         bandingkan_model.py, contoh_prediksi.py, jalankan_xgboost.py, validasi_xgboost.py
+dashboard/       streamlit_app.py (Duha)
 data/mentah/     mentah_snbp.json, mentah_snbt.json   — JANGAN DIUBAH
 data/olahan/     snpmb_panel.csv (43.449 baris, 24 kolom), peminat_provinsi_snbt.csv
 data/contoh_unand/
-hasil/           evaluasi.csv dan grafik/
+hasil/           evaluasi.csv, perbandingan_model.csv, dan grafik/
 ```
 
 Jalur di kode selalu relatif terhadap akar proyek: `AKAR = Path(__file__).resolve().parents[1]`.
@@ -50,6 +52,7 @@ python src/ambil_data_snpmb.py                       # bangun panel dari mentah 
 python src/ambil_data_snpmb.py --paksa-unduh semua   # unduh ulang ±10 menit
 python src/fitur_kelompok_bidang.py                  # mode tinjau pemetaan bidang
 python src/fitur_prodi_sejenis.py --uji              # uji fitur prodi sejenis
+python scripts/bandingkan_model.py                   # validasi & pemilihan model (±10 menit)
 python analisis/analisa_tren_unand.py SNBT
 ```
 
