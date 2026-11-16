@@ -6,9 +6,36 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
-## [Shiddiq — Random Forest] — 2026-10-29
+## [0.8.0] — 2026-11-12
 
-Hasil model Random Forest, penyetelan hyperparameter, dan feature importance (branch `random-forest-02-shiddiq`; rentang prediksi prodi baru belum dikerjakan).
+Fondasi versi 2: fitur prodi sejenis, skenario ketiga, dan penanda vokasi SNBT. **Semua model wajib dijalankan ulang**; hasil versi 1 tidak setara dengan versi 2.
+
+### Ditambahkan
+- `src/fitur_prodi_sejenis.py`: normalisasi nama prodi menjadi `prodi_normal` (1.420 nama mentah → 755 nama baku, 148 entri sinonim) dan `tambah_fitur_sejenis()` untuk tiga fitur t−1 dari prodi sejenis (`prodi_normal` + `jenjang`, per jalur, PTN lain saja): `rata_peminat_prodi_sejenis_lag1`, `jumlah_ptn_punya_prodi_sejenis_lag1`, `rasio_peminat_vs_sejenis_lag1` ([K-20](KEPUTUSAN_METODOLOGI.md#k-20)). Uji `--uji`: 2.000/2.000 baris cocok dengan hitungan manual.
+- Skenario `tanpa_riwayat_sendiri` untuk prodi baru yang punya padanan di PTN lain: latih 22.453, uji 8.834 baris (gabungan).
+- Penanda `is_rezim_vokasi_snbt` (tahun ≥ 2024, skenario `tanpa_lag`) dan `is_lintas_rezim_vokasi_snbt` (tahun = 2024, skenario berbasis t−1) untuk lonjakan peminat vokasi SNBT; penyebab lonjakan belum diketahui ([K-19](KEPUTUSAN_METODOLOGI.md#k-19)).
+- Baseline `baseline_rata_sejenis` dan pengukuran pengaruh penanda di `hasil/analisis_penanda_rezim.csv`.
+- Kolom `versi_fondasi` di `hasil/evaluasi.csv` ([K-22](KEPUTUSAN_METODOLOGI.md#k-22)).
+- `kelompok_prodi()`, `lipatan_uji()`, dan `latih_dan_prediksi()`: `tanpa_lag` dan `tanpa_riwayat_sendiri` dinilai dengan 5 lipatan kelompok prodi (PTN + nama baku + jenjang), sehingga prodi uji tidak pernah ikut dilatih. `lipatan_waktu()` ikut berkelompok untuk kedua skenario itu ([K-24](KEPUTUSAN_METODOLOGI.md#k-24)). Tanpa ini, skor kedua skenario 20–29% terlalu optimistis.
+- K-21: keterbatasan `dengan_lag` yang bias ke prodi umum.
+- `log_fitur()` di `fondasi.py`: `log1p` pada lima fitur yang sangat menceng, dipasang di pipeline model linear bertarget log ([K-23](KEPUTUSAN_METODOLOGI.md#k-23)). Pada Linear Regression `dengan_lag` target log, R² naik dari −1.640,99 menjadi 0,7546. `X` dari `muat_data()` tidak berubah; model pohon tidak memerlukannya.
+
+### Diubah
+- Skenario `dengan_lag` memakai ketiga fitur prodi sejenis dan kehilangan 8,7% baris yang tidak punya pembanding: latih 23.445 → 21.507, uji 9.416 → 8.508 (gabungan). Baris yang keluar didominasi prodi vokasi ([K-21](KEPUTUSAN_METODOLOGI.md#k-21)).
+- `notebooks/00_baseline.ipynb` dijalankan ulang: 15 baris baseline untuk tiga skenario × tiga jalur. Baseline lag-1 gabungan kini MAE 66,11 (sebelumnya 67,54 pada baris uji versi 1).
+- Template menilai 6 konfigurasi (3 skenario × 2 target) lewat `latih_dan_prediksi()`, menampilkan `baseline_rata_sejenis`, dan memanggil `buat_model(target)` sehingga praproses dapat berbeda per target. **Notebook salinan template lama harus menyalin ulang ketiga sel `JANGAN DIUBAH`.**
+- Tafsiran K-11: Administrasi Perkantoran D3 Unand adalah contoh ekstrem lonjakan vokasi SNBT, bukan artefak satu prodi.
+- Panduan anggota, standar pengerjaan, pembagian tugas, kamus data, dan CLAUDE.md diselaraskan dengan tiga skenario.
+
+### Diperbaiki
+- `is_psdku` kini menangkap `PDSKU`, `KAMP`, dan `FIKKIA BANYUWANGI`: 182 → 188 prodi (170 → 176 bertarget) ([K-16](KEPUTUSAN_METODOLOGI.md#k-16)).
+- `GEOLOGI` tidak lagi digabung ke `TEKNIK GEOLOGI`; `TEKNOLOGI DAN MANAJEMEN PEMBENIHAN IKAN` digabung ke `TEKNOLOGI PEMBENIHAN IKAN`.
+
+---
+
+## [Shiddiq — Random Forest, fondasi versi 1] — 2026-10-29
+
+Hasil model Random Forest, penyetelan hyperparameter, dan feature importance pada **fondasi versi 1** (branch `random-forest-02-shiddiq`; rentang prediksi prodi baru belum dikerjakan). Hasil ini **tidak setara** dengan fondasi versi 2 (K-22) dan dijalankan ulang di versi 2; empat baris `random_forest` versi 1 tidak lagi ada di `hasil/evaluasi.csv` dan dapat dilihat di commit `14d44cc`.
 
 ### Ditambahkan
 - `notebooks/02_random_forest.ipynb`, salinan template dengan `NAMA_MODEL = "random_forest"`; sel *JANGAN DIUBAH* tidak disentuh. Sel *ISI BAGIAN INI* diubah, dan ditambah sel penyetelan serta feature importance di luar sel terkunci.
@@ -30,6 +57,8 @@ Hasil model Random Forest, penyetelan hyperparameter, dan feature importance (br
 - Cara menjalankan: bangun panel dengan `python src/ambil_data_snpmb.py` (folder `data/olahan/` tidak di-commit), lalu *Restart & Run All* dari dalam folder repo. Penyetelan dan importance memakai berkas CSV tersimpan; atur `ULANG_TUNING` / `ULANG_IMPORTANCE` ke `True` untuk menghitung ulang (±20 dan ±10 menit).
 - Untuk Mikail: sel pertama template mencari folder `src/` dengan loop tanpa kondisi berhenti, sehingga berputar tanpa akhir bila notebook dijalankan dari luar folder repo. Tidak diubah; dilaporkan saja.
 - Belum ada: rentang prediksi prodi baru (persentil antarpohon) dan cakupannya pada 2024. Contoh prodi baru menunggu fungsi masukan prodi baru dari Mikail agar melewati transformasi yang sama dengan data latih.
+
+---
 
 ---
 

@@ -32,7 +32,7 @@ Panduan untuk Claude Code. Detail lengkap ada di `docs/`; berkas ini memuat hal 
 ## Struktur
 
 ```
-src/             ambil_data_snpmb.py, fitur_kelompok_bidang.py, fondasi.py
+src/             ambil_data_snpmb.py, fitur_kelompok_bidang.py, fitur_prodi_sejenis.py, fondasi.py
 analisis/        analisis & grafik contoh Unand
 notebooks/       00_baseline.ipynb, template_model.ipynb
 data/mentah/     mentah_snbp.json, mentah_snbt.json   — JANGAN DIUBAH
@@ -49,6 +49,7 @@ Jalur di kode selalu relatif terhadap akar proyek: `AKAR = Path(__file__).resolv
 python src/ambil_data_snpmb.py                       # bangun panel dari mentah (tanpa jaringan)
 python src/ambil_data_snpmb.py --paksa-unduh semua   # unduh ulang ±10 menit
 python src/fitur_kelompok_bidang.py                  # mode tinjau pemetaan bidang
+python src/fitur_prodi_sejenis.py --uji              # uji fitur prodi sejenis
 python analisis/analisa_tren_unand.py SNBT
 ```
 
@@ -77,4 +78,7 @@ Windows 11, Python 3.13. Dependensi proyek tercantum di `requirements.txt`, term
 - `terima` kosong 100% di SNBT.
 - API mengembalikan `200 OK` berisi `[]` untuk `id_ptn` yang salah; kegagalannya senyap.
 - 21 entri fakultas ITB (`is_fakultas = 1`) dikeluarkan dari pemodelan.
+- Peminat vokasi SNBT melonjak mulai 2024 (penyebab belum diketahui). Skenario berbasis t−1 memakai penanda lintas rezim (tahun = 2024), bukan tahun ≥ 2024 (K-19).
+- Hasil `evaluasi.csv` hanya setara dalam `versi_fondasi` yang sama (K-22).
+- Skenario prodi baru (`tanpa_lag`, `tanpa_riwayat_sendiri`) dinilai dengan lipatan kelompok prodi lewat `latih_dan_prediksi()`; pembagian waktu saja membuat skornya 20–29% terlalu optimistis (K-24).
 - Pencocokan kata kunci harus di **awal kata**; substring polos terbukti salah (`IKAN` di *PENDIDIKAN*/*PERBAIKAN*).
