@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from html import escape
 import subprocess
 import sys
 
@@ -73,36 +74,38 @@ def tombol(label: str, tujuan: str, kunci: str) -> None:
 def sidebar() -> str:
     aktif = str(st.session_state.get("halaman", "Beranda"))
     with st.sidebar:
-        st.html('<div class="brand"><div class="brand-icon">S</div><div><b>SNPMB Insight</b><small>Kenali pilihan kuliahmu</small></div></div>')
-        st.caption("JELAJAHI PILIHANMU")
+        st.html('<div class="wordmark" aria-label="SNPMB Insight"><div><span>S</span>NPMB</div><small>INSIGHT</small></div>')
+        st.caption("EKSPLORASI")
         for nama in list(MENU)[:4]:
             st.button(nama, icon=MENU[nama], type="primary" if aktif == nama else "tertiary", width="stretch", key=f"menu_{nama}", on_click=pindah, args=(nama,))
         st.divider()
-        st.caption("PAHAMI DATANYA")
+        st.caption("PENELITIAN")
         for nama in list(MENU)[4:]:
             st.button(nama, icon=MENU[nama], type="primary" if aktif == nama else "tertiary", width="stretch", key=f"menu_{nama}", on_click=pindah, args=(nama,))
-        st.html('<div class="sidebar-note"><b>Mulai dari rasa ingin tahu.</b><p>Cari kampus dan jurusan, lalu lihat bagaimana jumlah peminatnya berubah.</p><span>DATA 2021–2025</span></div>')
+        st.divider()
+        st.caption("Data SNPMB · 2021–2025")
         st.caption("Proyek mahasiswa · Bukan situs resmi SNPMB")
     return aktif
 
 
 def pilih_jalur(kunci: str) -> str:
-    return str(st.radio("Jalur masuk", ["SNBP", "SNBT"], horizontal=True, key=kunci, help="SNBP: seleksi berdasarkan prestasi. SNBT: seleksi berdasarkan tes. Data kedua jalur ditampilkan terpisah."))
+    pilihan = st.segmented_control("Jalur masuk", ["SNBP", "SNBT"], default="SNBP", required=True,
+                                   key=kunci, width="stretch",
+                                   help="SNBP berdasarkan prestasi; SNBT berdasarkan tes. Data ditampilkan per jalur.")
+    return str(pilihan)
+
 
 
 def beranda(data: pd.DataFrame) -> None:
-    st.html('<div class="hero"><span class="eyebrow">LANGKAH AWAL MEMILIH KULIAH</span><h1>Kenali jurusan.<br><span>Pahami peminatnya.</span></h1><p>Lihat riwayat peminat dan daya tampung kampus pilihanmu.<br>Mulai dengan mencari jurusan, lalu bandingkan pilihanmu.</p><span class="hero-chip">SNBP & SNBT</span><span class="hero-chip teal">Data 2021–2025</span><span class="hero-chip amber">Eksplorasi pilihan kuliah</span></div>')
-    a, b = st.columns(2)
-    with a: tombol("Cari jurusan", "Cari Jurusan", "hero_cari")
-    with b: tombol("Bandingkan pilihan", "Bandingkan Jurusan", "hero_banding")
-    st.write("")
-    kiri, kanan = st.columns([3, 1])
-    with kiri:
-        st.subheader("Sekilas data kampus")
-        st.caption("Angka berikut mengikuti jalur dan tahun yang kamu pilih.")
-    with kanan:
-        tahun = st.selectbox("Tahun data", sorted(data.tahun.unique()), index=len(data.tahun.unique()) - 1)
-    jalur = pilih_jalur("jalur_beranda")
+    st.title("Ringkasan peminat")
+    st.write("Data program studi dan peminat di perguruan tinggi peserta SNPMB.")
+    with st.container(key="filter_beranda"):
+        kiri, kanan = st.columns([2, 1])
+        with kiri:
+            jalur = pilih_jalur("jalur_beranda")
+        with kanan:
+            tahun = st.selectbox("Tahun data", sorted(data.tahun.unique()), index=len(data.tahun.unique()) - 1)
+    st.caption(f"{jalur} · {tahun} · Hanya program studi dengan data peminat tersedia")
     tahun_data = data[data.jalur.eq(jalur) & data.tahun.eq(tahun)]
     if tahun_data.empty:
         st.info("Belum ada data untuk tahun dan jalur ini. Coba pilihan lain.")
@@ -114,7 +117,7 @@ def beranda(data: pd.DataFrame) -> None:
     st.write("")
     a, b = st.columns([1.65, 1])
     with a, st.container(key="tren_beranda"):
-        st.subheader("Bagaimana peminat berubah?")
+        st.subheader("Tren peminat 2021–2025")
         st.caption(f"Rata-rata peminat per jurusan melalui {jalur}")
         tren = data[data.jalur.eq(jalur)].groupby("tahun", as_index=False).peminat.mean()
         grafik = alt.Chart(tren).mark_area(color="#dceafe", line={"color": "#2563eb", "strokeWidth": 3}, point={"color": "#2563eb", "size": 55}).encode(
@@ -125,10 +128,24 @@ def beranda(data: pd.DataFrame) -> None:
         st.altair_chart(grafik, width="stretch")
         st.caption("Jumlah jurusan yang tersedia dapat berbeda setiap tahun. Grafik ini bukan prediksi tahun berikutnya.")
     with b, st.container(key="panduan_beranda"):
-        st.subheader("Mulai dari sini")
-        st.html('<div class="step"><span class="step-num">01</span><div><b>Pilih jalur masuk</b><p>Lihat SNBP atau SNBT secara terpisah.</p></div></div><div class="step"><span class="step-num">02</span><div><b>Temukan jurusan</b><p>Cari kampus dan jurusan yang kamu minati.</p></div></div><div class="step"><span class="step-num">03</span><div><b>Bandingkan riwayatnya</b><p>Perhatikan perubahan peminat dan jumlah kursi.</p></div></div>')
-        tombol("Pelajari cara membaca data", "Panduan", "bantuan_beranda")
-    st.caption("Banyak peminat tidak berarti peluang lolosmu dapat dihitung dari angka ini. Gunakan data sebagai bahan pertimbangan, bukan kepastian diterima.")
+        st.subheader("Peminat terbanyak")
+        st.caption(f"Lima program studi · {jalur} {tahun}")
+        teratas = tahun_data.nlargest(5, "peminat")
+        baris = []
+        for nomor, row in enumerate(teratas.itertuples(index=False), start=1):
+            baris.append(
+                f'<div class="popular-row"><span class="rank">{nomor}</span>'
+                f'<div><strong>{escape(str(row.prodi).title())}</strong>'
+                f'<small>{escape(str(row.ptn_nama).title())}</small></div>'
+                f'<b>{angka(row.peminat)}</b></div>'
+            )
+        st.html('<div class="popular-list">' + ''.join(baris) + '</div>')
+        st.caption("Jumlah peminat tidak menunjukkan peluang lolos atau mutu program studi.")
+    st.divider()
+    kiri, kanan = st.columns(2)
+    with kiri: tombol("Cari jurusan", "Cari Jurusan", "beranda_cari")
+    with kanan: tombol("Bandingkan jurusan", "Bandingkan Jurusan", "beranda_banding")
+
 
 
 def tampilkan_pilihan(terpilih: pd.DataFrame, jalur: str) -> None:
@@ -158,25 +175,48 @@ def tampilkan_pilihan(terpilih: pd.DataFrame, jalur: str) -> None:
 
 
 def jelajah(data: pd.DataFrame, bandingkan: bool) -> None:
-    st.title("Bandingkan pilihanmu" if bandingkan else "Temukan jurusan pilihanmu")
-    st.write("Lihat riwayat beberapa jurusan dari kampus berbeda, pada jalur masuk yang sama." if bandingkan else "Pilih kampus, lalu lihat perubahan peminat jurusan yang kamu minati.")
-    jalur = pilih_jalur("jalur_jelajah")
+    st.title("Perbandingan jurusan" if bandingkan else "Cari jurusan")
+    st.write("Tentukan kampus dan jurusan pada setiap kolom untuk membandingkan riwayat peminatnya."
+             if bandingkan else "Pilih kampus dan program studi untuk melihat riwayat peminat.")
+    konteks = "banding" if bandingkan else "cari"
+    with st.container(key=f"filter_{konteks}"):
+        kiri, kanan = st.columns(2)
+        with kiri:
+            jalur = pilih_jalur(f"jalur_{konteks}")
+        with kanan:
+            rentang = st.slider("Rentang tahun", int(data.tahun.min()), int(data.tahun.max()),
+                                (int(data.tahun.min()), int(data.tahun.max())), key=f"tahun_{konteks}")
     dasar = data[data.jalur.eq(jalur)]
     kampus = sorted(dasar.ptn_nama.unique().tolist())
-    with st.container(border=True):
-        a, b = st.columns([2, 1])
-        with a:
-            if bandingkan:
-                pilihan_ptn = st.multiselect("1. Pilih kampus (maksimal 3)", kampus, default=kampus[:2], max_selections=3, format_func=str.title)
-            else:
-                pilihan_ptn = [st.selectbox("1. Pilih kampus", kampus, format_func=str.title)]
-        with b:
-            rentang = st.slider("2. Pilih tahun", int(data.tahun.min()), int(data.tahun.max()), (int(data.tahun.min()), int(data.tahun.max())))
-        kandidat = dasar[dasar.ptn_nama.isin(pilihan_ptn)]
-        katalog = kandidat.drop_duplicates("id_prodi").sort_values("label")
-        nama: dict[int, str] = dict(zip(katalog.id_prodi.astype(int), katalog.label))
-        pilihan = st.multiselect("3. Pilih jurusan (maksimal 5)", list(nama), default=list(nama)[:2], max_selections=5, format_func=lambda kode: nama[kode], key=f"pilih_{bandingkan}_{jalur}_{'|'.join(pilihan_ptn)}", help="Ketik nama jurusan untuk mempercepat pencarian.")
-    terpilih = kandidat[kandidat.id_prodi.isin(pilihan) & kandidat.tahun.between(*rentang)]
+    if not kampus:
+        st.info("Data kampus pada jalur ini belum tersedia.")
+        return
+    pilihan: list[int] = []
+    if bandingkan:
+        tambah = st.toggle("Tambahkan jurusan ketiga", key="tiga_jurusan")
+        for i, kolom in enumerate(st.columns(3 if tambah else 2)):
+            with kolom, st.container(border=True, key=f"pilihan_banding_{i}"):
+                st.subheader(f"Pilihan {i + 1}")
+                ptn = st.selectbox("Kampus", kampus, index=min(i, len(kampus) - 1),
+                                   format_func=str.title, key=f"kampus_banding_{i}_{jalur}")
+                katalog = dasar[dasar.ptn_nama.eq(ptn)].drop_duplicates("id_prodi").sort_values(["prodi", "jenjang"])
+                nama: dict[int, str] = dict(zip(katalog.id_prodi.astype(int), katalog.prodi.str.title() + " · " + katalog.jenjang))
+                kode = st.selectbox("Program studi", list(nama), format_func=nama.__getitem__,
+                                    key=f"prodi_banding_{i}_{jalur}_{ptn}")
+                pilihan.append(int(kode))
+        if len(set(pilihan)) != len(pilihan):
+            st.info("Ada pilihan jurusan yang sama. Pilih jurusan berbeda pada setiap kolom untuk membandingkannya.")
+            return
+    else:
+        with st.container(border=True):
+            ptn = st.selectbox("Kampus", kampus, format_func=str.title, key=f"kampus_cari_{jalur}")
+            katalog = dasar[dasar.ptn_nama.eq(ptn)].drop_duplicates("id_prodi").sort_values(["prodi", "jenjang"])
+            nama = dict(zip(katalog.id_prodi.astype(int), katalog.prodi.str.title() + " · " + katalog.jenjang))
+            pilihan = st.multiselect("Program studi", list(nama), default=list(nama)[:1], max_selections=5,
+                                     format_func=nama.__getitem__, key=f"prodi_cari_{jalur}_{ptn}",
+                                     placeholder="Ketik nama program studi", help="Pilih maksimal lima program studi.")
+    terpilih = dasar[dasar.id_prodi.isin(pilihan) & dasar.tahun.between(*rentang)]
+    st.divider()
     tampilkan_pilihan(terpilih, jalur)
 
 
@@ -262,7 +302,7 @@ def utama() -> None:
     st.set_page_config(page_title="SNPMB Insight · Kenali pilihan kuliahmu", page_icon=":material/school:", layout="wide")
     st.html((Path(__file__).with_name("style.css")).read_text(encoding="utf-8"))
     halaman = sidebar()
-    st.caption(f"SNPMB INSIGHT  /  {halaman.upper()}")
+
     try:
         lokasi = siapkan_panel()
         data = baca_data(lokasi, lokasi.stat().st_mtime_ns)

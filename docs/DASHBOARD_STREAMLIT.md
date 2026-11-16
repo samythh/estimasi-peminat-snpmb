@@ -44,4 +44,4 @@ Prediksi baru, model anggota lain, serta rentang prediksi belum diintegrasikan. 
 
 Bagikan https://snpmb-insight.streamlit.app/ kepada dosen. Opsi `Make this app public` sudah aktif saat pemeriksaan; permintaan sesi baru tanpa kredensial kembali ke alamat aplikasi dengan HTTP 200.
 
-Sidebar navy memakai aksen biru dan teal; kartu ringkasan memakai biru, teal, dan amber. Tombol diperlebar agar label tidak terpotong. Keenam menu lolos AppTest dan susunan Beranda sudah diperiksa visual. Pemindahan deployment ke repo kelompok dilakukan setelah koordinasi dengan Mikail.
+Sidebar hijau pinus (#193d32) memakai aksen sage (#b7d6a1); kartu ringkasan memakai biru, teal, dan amber. Logo kotak diganti wordmark SNPMB dengan huruf S besar. Beranda menampilkan ringkasan, tren, dan lima prodi dengan peminat terbanyak. Pilihan jalur memakai tombol menyatu; perbandingan memakai dua kolom kampus–jurusan dengan opsi kolom ketiga. Tombol diperlebar agar label tidak terpotong. Keenam menu lolos AppTest dan susunan Beranda sudah diperiksa visual. Pemindahan deployment ke repo kelompok dilakukan setelah koordinasi dengan Mikail.

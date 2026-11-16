@@ -6,6 +6,15 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Duha — sidebar hijau dan perbandingan jurusan] — 2026-11-16
+
+- Mengganti sidebar menjadi hijau pinus dengan aksen sage, menghapus ikon kotak S, dan memperbesar huruf S pada wordmark SNPMB.
+- Menyederhanakan Beranda menjadi filter jalur/tahun, ringkasan angka, tren, dan lima prodi dengan peminat terbanyak.
+- Mengganti radio SNBP/SNBT dengan tombol pilihan menyatu. Perbandingan memakai dua pasangan kampus–jurusan dan opsi jurusan ketiga; pilihan ganda yang sama ditolak dengan pesan.
+- Pemeriksaan: enam menu, tiga pasang pilihan, dan pilihan kosong lolos AppTest; Beranda serta perbandingan diperiksa di browser lokal. Model dan data evaluasi tidak diubah.
+
+---
+
 ## [Duha — perapian dashboard dan akses publik] — 2026-11-16
 
 - Memeriksa Sharing: `Make this app public` sudah aktif. Permintaan dengan sesi cookie baru tanpa login berhasil HTTP 200 pada https://snpmb-insight.streamlit.app/ .
