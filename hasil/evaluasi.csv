@@ -14,3 +14,9 @@
 2026-11-12T17:16:57,baseline_rata_sejenis,tanpa_riwayat_sendiri,gabungan,asli,22453,8834,1,254.52,382.57,0,0.3087,1.2352,0,,2
 2026-11-12T17:16:57,baseline_rata_sejenis,tanpa_riwayat_sendiri,SNBP,asli,11216,4409,1,173.9,308.96,0,0.4217,1.1497,0,,2
 2026-11-12T17:16:57,baseline_rata_sejenis,tanpa_riwayat_sendiri,SNBT,asli,11237,4425,1,334.86,455.91,0,0.2424,1.3149,0,,2
+2026-11-16T11:22:05,linear_regression,dengan_lag,gabungan,asli,21507,8508,76,84.02,125.8,0,0.9347,,1065,,2
+2026-11-16T11:22:05,linear_regression,dengan_lag,gabungan,log,21507,8508,76,90.01,26.99,0,0.7546,0.3774,0,,2
+2026-11-16T11:22:05,linear_regression,tanpa_lag,gabungan,asli,32959,9799,71,245.46,434.89,0,0.4377,,1160,,2
+2026-11-16T11:22:06,linear_regression,tanpa_lag,gabungan,log,32959,9799,71,204.78,94.66,0,0.4239,0.8073,0,,2
+2026-11-16T11:22:07,linear_regression,tanpa_riwayat_sendiri,gabungan,asli,22453,8834,73,209.32,436.58,0,0.5561,,1563,,2
+2026-11-16T11:22:07,linear_regression,tanpa_riwayat_sendiri,gabungan,log,22453,8834,73,163.33,64.19,0,0.5995,0.6726,0,,2
