@@ -6,6 +6,14 @@ Format: `[versi] — tanggal`, lalu kelompok *Ditambahkan*, *Diubah*, *Diperbaik
 
 ---
 
+## [Duha — penyederhanaan logo dan statistik] — 2026-11-16
+
+- Memperbaiki identitas sidebar menjadi simbol buku terbuka, wordmark SNPMB Insight, dan kepanjangan Seleksi Nasional Penerimaan Mahasiswa Baru.
+- Mengganti tiga kartu berwarna menjadi satu baris statistik tanpa kotak, dengan pemisah tipis. Sidebar tetap hijau pinus.
+- Tampilan Beranda diperiksa di browser lokal; perubahan hanya pada presentasi, tanpa perubahan data atau model.
+
+---
+
 ## [Duha — sidebar hijau dan perbandingan jurusan] — 2026-11-16
 
 - Mengganti sidebar menjadi hijau pinus dengan aksen sage, menghapus ikon kotak S, dan memperbesar huruf S pada wordmark SNPMB.

@@ -24,18 +24,10 @@ h3 {font-size:1.25rem!important;}
 [data-testid="stMetricLabel"] {height:auto;min-height:2.5rem;align-items:flex-start;}
 [data-testid="stMetricLabel"] p {white-space:normal!important;overflow:visible!important;line-height:1.4;}
 [data-testid="stMetricValue"] {color:#21466d;font-weight:700;font-size:2.1rem;}
-.st-key-ringkasan_angka [data-testid="stColumn"]:nth-child(2) [data-testid="stMetric"] {border-top-color:#0d9488;background:#f4fcfa;}
-.st-key-ringkasan_angka [data-testid="stColumn"]:nth-child(2) [data-testid="stMetricValue"] {color:#08786f;}
-.st-key-ringkasan_angka [data-testid="stColumn"]:nth-child(3) [data-testid="stMetric"] {border-top-color:#d99a25;background:#fffcf4;}
-.st-key-ringkasan_angka [data-testid="stColumn"]:nth-child(3) [data-testid="stMetricValue"] {color:#98630e;}
 [data-testid="stVerticalBlockBorderWrapper"]>div {border-radius:10px;background:white;}
 .st-key-tren_beranda,.st-key-panduan_beranda {background:white;border:1px solid var(--line);border-radius:10px;padding:22px;}
 [data-testid="stExpander"] {background:#fff;border-radius:12px;}
 [data-testid="stDataFrame"] {border-radius:12px;overflow:hidden;}
-.wordmark {margin:8px 0 30px; color:#fff;}
-.wordmark > div {font-size:28px;font-weight:750;letter-spacing:.015em;line-height:1.1;}
-.wordmark span {font-size:52px;color:#b7d6a1;letter-spacing:-.04em;}
-.wordmark small {display:block;font-size:11px;letter-spacing:.28em;color:#bfcebd;margin:6px 0 0 4px;}
 .st-key-filter_beranda,.st-key-filter_banding,.st-key-filter_cari {padding:16px 20px;background:#fff;border:1px solid #e1e8f0;border-radius:9px;}
 [data-testid="stSegmentedControl"] button {min-height:41px;border-radius:6px!important;}
 [data-testid="stBaseButton-segmented_controlActive"] {background:#37634e!important;border-color:#37634e!important;color:#fff!important;}
@@ -53,4 +45,19 @@ h3 {font-size:1.25rem!important;}
 .popular-row .rank {color:#839388;font-size:12px;padding-top:2px;}
 [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {color:#b6cbbf!important;}
 [data-testid="stSegmentedControl"] [aria-checked="true"] {background:#e4eee5!important;border-color:#62856b!important;color:#244a35!important;}
+.st-key-ringkasan_angka {padding:20px 0 25px;border-bottom:1px solid #dce3df;margin-bottom:6px;}
+.st-key-ringkasan_angka [data-testid="stMetric"] {background:transparent;border:0;border-radius:0;box-shadow:none;padding:0 22px;min-height:100px;}
+.st-key-ringkasan_angka [data-testid="stColumn"] + [data-testid="stColumn"] {border-left:1px solid #dce3df;}
+.st-key-ringkasan_angka [data-testid="stMetricValue"] {color:#233e32;font-size:2.4rem;font-weight:600;letter-spacing:-.04em;}
+.st-key-ringkasan_angka [data-testid="stMetricLabel"] {min-height:2.5rem;color:#5c6d64;}
+@media(max-width:700px){.st-key-ringkasan_angka [data-testid="stColumn"] + [data-testid="stColumn"]{border-left:0}.st-key-ringkasan_angka [data-testid="stMetric"]{padding:10px 0;min-height:90px}}
+.wordmark {margin:12px 0 26px;color:#f4f7f1;}
+.wordmark-lockup {display:flex;align-items:center;gap:11px;}
+.book-mark {position:relative;display:block;width:34px;height:34px;flex-shrink:0;}
+.book-mark i,.book-mark b {position:absolute;top:4px;width:14px;height:26px;border-radius:2px 2px 0 0;}
+.book-mark i {left:1px;background:#b7d6a1;transform:skewY(20deg);}
+.book-mark b {right:1px;background:#80ac8b;transform:skewY(-20deg);}
+.wordmark-name {font-size:29px;font-weight:800;letter-spacing:-.035em;line-height:1;}
+.wordmark-name small {display:block;margin-top:7px;font-size:10px;font-weight:600;letter-spacing:.28em;color:#b7d6a1;}
+.wordmark .wordmark-full {font-size:11px;line-height:1.65;color:#c2d0c6;margin:15px 0 0;letter-spacing:.015em;}
 </style>

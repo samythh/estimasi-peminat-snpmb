@@ -74,7 +74,13 @@ def tombol(label: str, tujuan: str, kunci: str) -> None:
 def sidebar() -> str:
     aktif = str(st.session_state.get("halaman", "Beranda"))
     with st.sidebar:
-        st.html('<div class="wordmark" aria-label="SNPMB Insight"><div><span>S</span>NPMB</div><small>INSIGHT</small></div>')
+        st.html(
+            '<div class="wordmark" aria-label="SNPMB Insight — Seleksi Nasional Penerimaan Mahasiswa Baru">'
+            '<div class="wordmark-lockup">'
+            '<span class="book-mark" aria-hidden="true"><i></i><b></b></span>'
+            '<div class="wordmark-name">SNPMB<small>INSIGHT</small></div></div>'
+            '<p class="wordmark-full">Seleksi Nasional Penerimaan<br>Mahasiswa Baru</p></div>'
+        )
         st.caption("EKSPLORASI")
         for nama in list(MENU)[:4]:
             st.button(nama, icon=MENU[nama], type="primary" if aktif == nama else "tertiary", width="stretch", key=f"menu_{nama}", on_click=pindah, args=(nama,))
